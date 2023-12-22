@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+
+}
+html, body {
+  width: 100%;
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  overflow: hidden;
+  position: relative;
+}
+
+/* APPLICATION */
+[role="application"] {
+  box-sizing: border-box;
+  display: block;
+  isolation: isolate;
+}
+[role="application"] #container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 45px);
+  grid-template-areas:
+    "main"
+    "nav"
+}
+
+[role="toolbar"] {
+  background-color: #161616;
+  flex-basis: 100%;
+}
+[role="toolbar"] label {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+
+  color: #d4d3d3;
+  font-size: 10px;
+  margin-top: 2px;
+}
+[role="toolbar"] .icon {
+  font-size: 18px;
+  color: #d4d3d3;
+}
+[role="toolbar"] .active {
+  color: #fff;
+}
+
+article.ui {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+article.ui h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+article.ui p {
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  max-width: 75ch;
+}
+article.ui small {
+  font-size: 0.75rem;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.fill-available-height {
+  height: 100%;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+}
+.fill-available-width {
+  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: fill-available;
+}
+.hide-scrollbars {
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* For Firefox */
+}
+.hide-scrollbars::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari and Opera */
+}
+.no-interaction {
+  overscroll-behavior: contain;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -ms-touch-action: none;
+  touch-action: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -ms-overflow-style: none;
+}
