@@ -1,5 +1,5 @@
 import { Translation } from "@db";
-import { getIdFromKvEntry } from "../lib/utils.ts";
+import { getBookInfoFromId, getDataFromId, getIdFromKvEntry } from "../lib/utils.ts";
 
 type ArticleProps = {
   vid: number;
@@ -10,11 +10,28 @@ type ArticleProps = {
 
 export default function Article(props: ArticleProps) {
   const { idx, translation, vid, verse } = props;
+
+  const id = getIdFromKvEntry(verse);
+  const [b, c, v] = getDataFromId(id);
+  const bookInfo = getBookInfoFromId(id + 1);
+
+  if (!bookInfo) {
+    return (
+      <article class="ui w-full h-full snap-start snap-always">
+        <h1>Error: No bookInfo for {id}</h1>
+        <h2>{c}:{v}</h2>
+        <p>{verse.value}</p>
+        <small>id: {id}; idx: {idx}; vid: {vid}; t: {translation.toUpperCase()}</small>
+      </article>
+    );
+  }
+
   return (
     <article class="ui w-full h-full snap-start snap-always">
-      <h1>{getIdFromKvEntry(verse)} - {translation.toUpperCase()}</h1>
+      <h1>{v > 1 ? bookInfo.title_short : bookInfo.title_full}</h1>
+      <h2>{c}:{v}</h2>
       <p>{verse.value}</p>
-      <small>idx: {idx}; vid: {vid}</small>
+      <small>id: {id}; idx: {idx}; vid: {vid}; t: {translation.toUpperCase()}</small>
     </article>
   );
 }

@@ -1,3 +1,4 @@
+import { getBookInfo } from "@db";
 
 export function toHexColorFormat(book: number, chapter: number, verse: number): string {
   const hexBook = book.toString(16).padStart(2, "0").toUpperCase();
@@ -90,4 +91,18 @@ export const getLowestIdFromKvList = <T>(entries: Deno.KvEntry<T>[]): number => 
   const sorted = entries.toSorted((a, b) => getIdFromKvEntry(a) - getIdFromKvEntry(b));
   const lowestEntry = sorted[0];
   return getIdFromKvEntry(lowestEntry);
-}
+};
+
+export const getDataFromId = (id: number): [b: number, c: number, v: number] => {
+  // BCCCVVV or BBCCCVVV
+  const idStr = id.toString().padStart(8, "0");
+  const book = parseInt(idStr.substring(0, 2), 10);
+  const chapter = parseInt(idStr.substring(2, 5), 10);
+  const verse = parseInt(idStr.substring(5, 8), 10);
+  return [book, chapter, verse];
+};
+
+export const getBookInfoFromId = (id: number) => {
+  const [book] = getDataFromId(id);
+  return getBookInfo(book);
+};

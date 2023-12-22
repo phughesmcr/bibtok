@@ -1,5 +1,7 @@
 /// <reference lib="deno.unstable" />
 
+import BOOK_INFO from "./book_info.json" assert { type: "json" };
+
 export type Translation = "asv" | "bbe" | "kjv" | "web";
 
 export type BookInfo = {
@@ -16,7 +18,9 @@ export type CrossRef = [sv: number, ev: number, r: number];
 
 const db = await Deno.openKv("./db/bible.db");
 
-export const getBookInfo = (book: number) => db.get<BookInfo>(["books", book]).then(res => res.value);
+export const getBookInfoFromDb = (book: number) => db.get<BookInfo>(["books", book]).then(res => res.value);
+
+export const getBookInfo = (book: number) => BOOK_INFO.find(({ order }) => order === book);
 
 export const getCrossRef = (id: number) => db.get<CrossRef[]>(["crossrefs", id]).then(res => res.value);
 
