@@ -34,7 +34,7 @@
     "tailwindcss/": "npm:/tailwindcss@3.3.5/",
     "tailwindcss/plugin": "npm:/tailwindcss@3.3.5/plugin.js",
     "$std/": "https://deno.land/std@0.208.0/",
-    "escape": "https://deno.land/x/escape/mod.ts",
+    "escape": "https://deno.land/x/escape@1.4.2/mod.ts",
     "@db": "./db/db.ts",
     "@static/": "./static/"
   },
