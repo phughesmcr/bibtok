@@ -40,6 +40,8 @@
     "$std/": "https://deno.land/std@0.208.0/",
     "escape": "https://deno.land/x/escape@1.4.2/mod.ts",
     "@db": "./db/db.ts",
+    "@data": "./db/data.ts",
+    "@lib/": "./lib/",
     "@static/": "./static/"
   },
   "compilerOptions": {
