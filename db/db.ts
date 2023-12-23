@@ -5,7 +5,6 @@ import { escapeSql } from "escape";
 
 const db = await Deno.openKv(DB_PATH);
 
-globalThis.addEventListener("beforeunload", () => db?.close(), { passive: true });
 globalThis.addEventListener("unload", () => db?.close(), { passive: true });
 globalThis.addEventListener("unhandledrejection", () => db?.close(), { passive: true });
 
