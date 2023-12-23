@@ -6,11 +6,11 @@ export default function NavBar() {
       className="flex flex-row justify-around items-center p-1 gap-2 touch-none overflow-hidden h-full w-full max-w-full max-h-full"
     >
       <label>
-        <input type="radio" name="nav" value="gospel" />
-        Gospel
+        <input type="radio" name="nav" value="bible" checked />
+        Bible
       </label>
       <label>
-        <input type="radio" name="nav" value="psalms" checked />
+        <input type="radio" name="nav" value="psalms" />
         Psalms
       </label>
       <label>

@@ -1,5 +1,4 @@
 import { type PageProps } from "$fresh/server.ts";
-import { createContext } from "preact";
 import {
   APP_NAME,
   APP_TAGLINE,
@@ -13,11 +12,11 @@ import {
   META_KEYWORDS,
   META_ROBOTS,
   META_THEME_COLOR,
-  META_VIEWPORT
-} from "../lib/constants.ts";
-import createAppState, { type AppState } from "../lib/signals.ts";
+  META_VIEWPORT,
+} from "@lib/constants.ts";
+import { type AppState, createAppState } from "@lib/state.ts";
+import { createContext } from "preact";
 
-// @ts-ignore
 export const GlobalAppState = createContext<AppState>({} as AppState);
 
 export default function App({ Component }: PageProps) {
@@ -59,7 +58,7 @@ export default function App({ Component }: PageProps) {
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={APP_NAME} />
           <meta name="twitter:description" content={META_DESCRIPTION} />
-          <meta name="twitter:image:src" content={`${LINK_CANONICAL}/img/twittercard.png`} />
+          <meta name="twitter:image:src" content={`${LINK_CANONICAL}/img/card.png`} />
 
           <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
           <link rel="canonical" href={LINK_CANONICAL} />

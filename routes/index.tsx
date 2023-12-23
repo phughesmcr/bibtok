@@ -1,46 +1,38 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { Translation, getPageOfVerses } from "@db";
+import { APP_NAME } from "@lib/constants.ts";
+import { fetchWithParams, getApiParamsFromUrl } from "@lib/utils.ts";
 import { batch, effect } from "@preact/signals";
-import { escapeSql } from "escape";
 import { useContext } from "preact/hooks";
 import Carousel from "../islands/Carousel.tsx";
 import NavBar from "../islands/NavBar.tsx";
-import { API_PAGE_SIZE, APP_NAME, DEFAULT_ID, DEFAULT_TRANSLATION } from "../lib/constants.ts";
 import { GlobalAppState } from "./_app.tsx";
 
 type HomeProps = {
   cursor?: string;
-  translation: Translation;
+  translation: string;
   vid: string;
-  prevOffset?: string;
-  nextOffset?: string;
   verses: Deno.KvEntry<string>[];
-}
+};
 
-export const handler: Handlers = {
+export const handler: Handlers<HomeProps> = {
   async GET(req, ctx) {
-    // get the search params
-    const requestUrl = new URL(req.url);
-    const searchParams = requestUrl.searchParams;
-    const translation = escapeSql(searchParams.get("t") || DEFAULT_TRANSLATION);
-    const vid = escapeSql(searchParams.get("vid") || `${DEFAULT_ID}`);
-
-    // query the database
-    const iter = getPageOfVerses(translation as Translation, parseInt(vid, 10), API_PAGE_SIZE);
-    const verses: Deno.KvEntry<string>[] = [];
-    for await (const verse of iter) {
-      verses.push(verse);
-    }
-    return ctx.render({ translation, vid, verses });
+    const { cursor, pageSize, translation, vid } = getApiParamsFromUrl(req.url);
+    const url = new URL(req.url);
+    const data = await fetchWithParams(url.origin, { cursor, pageSize, translation, vid });
+    const { verses, cursor: newCursor } = await data.json();
+    return ctx.render({ translation, vid, verses, cursor: newCursor });
   },
 };
 
 export default function Home(props: PageProps<HomeProps>) {
-  const { translation, vid, verses } = useContext(GlobalAppState);
+  const { translation, vid, verses, cursor } = useContext(GlobalAppState);
 
   batch(() => {
     vid.value = parseInt(props.data.vid, 10);
-    translation.value = props.data.translation;
+    translation.value = props.data.translation as Translation;
+    if (props.data.cursor) {
+      cursor.value = props.data.cursor;
+    }
   });
 
   effect(() => {

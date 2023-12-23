@@ -73,28 +73,37 @@ article.ui {
   overflow: hidden;
   z-index: 1;
 }
-article.ui h1 {
-  font-size: 1.5rem;
+article.ui .info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+article.ui .info h1 {
+  font-size: 1rem;
   font-weight: 600;
   margin: 0;
   padding: 0;
-  text-align: center;
 }
-article.ui p {
+article.ui .info p {
   font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+article.ui .info small {
+  font-size: 0.75rem;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+article.ui > p {
+  font-size: 2rem;
   font-weight: 400;
   margin: 0;
   padding: 0;
   text-align: center;
   max-width: 75ch;
-}
-article.ui small {
-  font-size: 0.75rem;
-  font-weight: 400;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
 .fill-available-height {
