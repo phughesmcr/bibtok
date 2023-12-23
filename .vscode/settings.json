@@ -23,8 +23,15 @@
   ],
   "cSpell.words": [
     "BBCCCVVV",
+    "BCCCVVV",
+    "callout",
+    "crossrefs",
+    "msapplication",
     "phugh",
     "preact",
-    "tailwindcss"
-  ]
+    "shortlink",
+    "tailwindcss",
+    "tiktok"
+  ],
+  "editor.formatOnSave": true
 }
