@@ -5,22 +5,25 @@ export type AppState = {
   cursor: Signal<string | undefined>;
   pageSize: Signal<number>;
   translation: Signal<Translation>;
-  vid: Signal<number>;
-  verses: Signal<Deno.KvEntry<string>[]>;
+  startFrom: Signal<number | undefined>;
+  endAt: Signal<number | undefined>;
+  verses: Signal<Verse[]>;
 };
 
 export function createAppState(): AppState {
   const cursor = signal<string | undefined>(undefined);
   const pageSize = signal<number>(API_DEFAULT_PAGE_SIZE);
   const translation = signal<Translation>(API_DEFAULT_TRANSLATION);
-  const vid = signal<number>(API_DEFAULT_ID);
-  const verses = signal<Deno.KvEntry<string>[]>([]);
+  const startFrom = signal<number>(API_DEFAULT_ID);
+  const endAt = signal<number | undefined>(undefined);
+  const verses = signal<Verse[]>([]);
 
   return {
     cursor,
     pageSize,
     translation,
-    vid,
+    startFrom,
+    endAt,
     verses,
   };
 }

@@ -1,4 +1,13 @@
-import { API_DEFAULT_ID, API_DEFAULT_PAGE_SIZE, API_DEFAULT_TRANSLATION, API_MAX_ID, API_MIN_ID } from "./constants.ts";
+import {
+  API_DEFAULT_PAGE_SIZE,
+  API_DEFAULT_TRANSLATION,
+  API_MAX_ID,
+  API_MAX_PAGE_SIZE,
+  API_MIN_ID,
+  API_MIN_PAGE_SIZE,
+} from "./constants.ts";
+
+import { escapeSql } from "escape";
 
 // VerseRef helpers
 
@@ -52,19 +61,58 @@ export function refFromUrl(url: string): number {
 
 // API helpers
 
+export function conformTranslation(translation: string): Translation {
+  const cleanedTranslation = escapeSql(translation.toLowerCase().trim());
+  switch (cleanedTranslation) {
+    case "asv":
+    case "bbe":
+    case "kjv":
+    case "web":
+      return cleanedTranslation;
+    default:
+      return API_DEFAULT_TRANSLATION;
+  }
+}
+
+export function conformPageSize(pageSize: string) {
+  return clamp(
+    Math.abs(parseInt(escapeSql(pageSize), 10)),
+    API_MIN_PAGE_SIZE,
+    API_MAX_PAGE_SIZE,
+  );
+}
+
+export function conformStartFrom(id: string | null): number | undefined {
+  return id ? parseInt(escapeSql(id), 10) : undefined;
+}
+
+export function conformEndAt(endAt: string | null): number | undefined {
+  return endAt ? parseInt(escapeSql(endAt), 10) || undefined : undefined;
+}
+
+export function conformCursor(cursor: string | null): string | undefined {
+  return cursor ? escapeSql(cursor) : undefined;
+}
+
 export function getApiParamsFromUrl(url: string): ApiParams {
   const requestUrl = new URL(url);
   const searchParams = requestUrl.searchParams;
-  const translation = searchParams.get("t") || API_DEFAULT_TRANSLATION;
-  const vid = searchParams.get("vid") || `${API_DEFAULT_ID}`;
-  const pageSize = searchParams.get("s") || `${API_DEFAULT_PAGE_SIZE}`;
-  const cursor: string | undefined = searchParams.has("c") ? (searchParams.get("c") || "") : undefined;
-  return { translation, vid, pageSize, cursor };
+  const translation = conformTranslation(searchParams.get("t") || `${API_DEFAULT_TRANSLATION}`);
+  const pageSize = conformPageSize(searchParams.get("s") || `${API_DEFAULT_PAGE_SIZE}`);
+  const startFrom = conformStartFrom(searchParams.get("sv"));
+  const endAt = conformEndAt(searchParams.get("ev"));
+  const cursor = conformCursor(searchParams.get("c"));
+  return { translation, startFrom, endAt, cursor, pageSize };
 }
 
 export function fetchWithParams(origin: string, params: ApiParams) {
-  const { translation, vid, pageSize, cursor } = params;
-  const url = `${origin}/api/v1/verses?&translation=${translation}&vid=${vid}cursor=${cursor}&pageSize=${pageSize}`;
+  const { translation, startFrom, endAt, pageSize, cursor } = params;
+  const url = new URL(`${origin}/api/v1/verses`);
+  url.searchParams.set("t", translation || API_DEFAULT_TRANSLATION);
+  if (startFrom) url.searchParams.set("sv", startFrom.toString());
+  if (endAt) url.searchParams.set("ev", endAt.toString());
+  if (pageSize) url.searchParams.set("s", pageSize.toString());
+  if (cursor) url.searchParams.set("c", cursor);
   return fetch(url);
 }
 

@@ -1,6 +1,6 @@
 /// <reference lib="deno.unstable" />
 
-import { API_DEFAULT_PAGE_SIZE, DB_PATH, KvPath } from "@lib/constants.ts";
+import { API_DEFAULT_PAGE_SIZE, API_DEFAULT_TRANSLATION, DB_PATH, KvPath } from "@lib/constants.ts";
 import { escapeSql } from "escape";
 
 const db = await Deno.openKv(DB_PATH);
@@ -24,16 +24,16 @@ export const getVerse = (translation: Translation, id: number) => {
   return db.get<string>([KvPath.TRANSLATIONS, cleanedTranslation, cleanedId]).then((res) => res.value);
 };
 
-export const getPageOfVerses = (spec: PageSpec) => {
-  const { translation, startFrom, endAt, pageSize, cursor } = spec;
-  const cleanedTranslation = escapeSql(translation);
-  const cleanedStartFrom = parseInt(escapeSql(startFrom.toString()), 10);
+export const getPageOfVerses = (params: ApiParams) => {
+  const { translation, startFrom, endAt, pageSize, cursor } = params;
+  const cleanedTranslation = translation ? escapeSql(translation) : API_DEFAULT_TRANSLATION;
+  const cleanedStartFrom = startFrom ? parseInt(escapeSql(startFrom.toString()), 10) : undefined;
   const cleanedEndAt = endAt ? parseInt(escapeSql(endAt.toString()), 10) : undefined;
   const cleanedCursor = cursor ? escapeSql(cursor) : undefined;
   const cleanedPageSize = parseInt(escapeSql((pageSize || API_DEFAULT_PAGE_SIZE).toString()), 10);
   return db.list<string>({
     prefix: [KvPath.TRANSLATIONS, cleanedTranslation],
-    start: [KvPath.TRANSLATIONS, cleanedTranslation, cleanedStartFrom],
+    start: cleanedStartFrom ? [KvPath.TRANSLATIONS, cleanedTranslation, cleanedStartFrom] : undefined,
     end: cleanedEndAt ? [KvPath.TRANSLATIONS, cleanedTranslation, cleanedEndAt] : undefined,
   }, { limit: cleanedPageSize, cursor: cleanedCursor });
 };

@@ -1,41 +1,32 @@
+import { Partial } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { APP_NAME } from "@lib/constants.ts";
+import { API_DEFAULT_PAGE_SIZE, APP_NAME } from "@lib/constants.ts";
 import { fetchWithParams, getApiParamsFromUrl } from "@lib/utils.ts";
-import { batch, effect } from "@preact/signals";
+import { batch } from "@preact/signals";
 import { useContext } from "preact/hooks";
 import Carousel from "../islands/Carousel.tsx";
 import NavBar from "../islands/NavBar.tsx";
 import { GlobalAppState } from "./_app.tsx";
 
-type HomeProps = {
-  cursor?: string;
-  translation: string;
-  vid: string;
-  verses: Deno.KvEntry<string>[];
-};
-
-export const handler: Handlers<HomeProps> = {
+export const handler: Handlers<ApiResponse> = {
   async GET(req, ctx) {
-    const { cursor, pageSize, translation, vid } = getApiParamsFromUrl(req.url);
+    const params = getApiParamsFromUrl(req.url);
     const url = new URL(req.url);
-    const data = await fetchWithParams(url.origin, { cursor, pageSize, translation, vid });
-    const { verses, cursor: newCursor } = await data.json();
-    return ctx.render({ translation, vid, verses, cursor: newCursor });
+    const data = await fetchWithParams(url.origin, params);
+    const json = await data.json() as ApiResponse;
+    return ctx.render(json);
   },
 };
 
-export default function Home(props: PageProps<HomeProps>) {
-  const { translation, vid, verses, cursor } = useContext(GlobalAppState);
+export default function Home(props: PageProps<ApiResponse>) {
+  const { translation, endAt, pageSize, verses, cursor, startFrom } = useContext(GlobalAppState);
 
   batch(() => {
-    vid.value = parseInt(props.data.vid, 10);
-    translation.value = props.data.translation as Translation;
-    if (props.data.cursor) {
-      cursor.value = props.data.cursor;
-    }
-  });
-
-  effect(() => {
+    if (props.data.translation) translation.value = props.data.translation;
+    if (pageSize) pageSize.value = props.data.pageSize || API_DEFAULT_PAGE_SIZE;
+    startFrom.value = props.data.startFrom;
+    endAt.value = props.data.endAt;
+    cursor.value = props.data.cursor;
     verses.value = [...verses.peek(), ...props.data.verses];
   });
 
@@ -57,7 +48,9 @@ export default function Home(props: PageProps<HomeProps>) {
           class="relative no-interaction w-full h-full"
         >
           <main className="min-w-0 min-h-0 w-full h-full">
-            <Carousel />
+            <Partial name="carousel">
+              <Carousel />
+            </Partial>
           </main>
           <nav className="min-w-0 min-h-0 w-full h-full">
             <NavBar />

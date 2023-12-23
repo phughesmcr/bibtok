@@ -24,6 +24,7 @@ export const API_DEFAULT_TABLE = "t_kjv" as const;
 export const API_DEFAULT_TRANSLATION: Translation = "kjv" as const;
 export const API_MAX_ID = 66022021 as const;
 export const API_MAX_PAGE_SIZE = 100 as const;
+export const API_MIN_PAGE_SIZE = 1 as const;
 export const API_MIN_ID = 1001001 as const;
 
 // export const DB_PATH = "./db/bible.db" as const;

@@ -24,25 +24,16 @@ declare type BookInfo = {
 
 declare type CrossRef = [sv: number, ev: number, r: number];
 
+declare type Verse = [id: number, text: string];
+
 declare type ApiParams = {
-  translation: string;
-  vid: string;
-  pageSize: string;
-  cursor?: string;
-};
-
-declare type Verses = {
-  verses: Deno.KvEntry<string>[];
-  cursor: string | undefined;
-  vid: string;
-  translation: string;
-  pageSize: string;
-};
-
-declare type PageSpec = {
-  translation: Translation;
-  startFrom: number;
+  translation?: Translation;
+  startFrom?: number;
   endAt?: number;
   pageSize?: number;
   cursor?: string;
+};
+
+declare type ApiResponse = ApiParams & {
+  verses: Verse[];
 };

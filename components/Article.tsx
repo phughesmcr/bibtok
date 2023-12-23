@@ -1,20 +1,17 @@
 import { getBookInfoFromId, getPericope } from "@data";
-import { getIdFromKvEntry, refFromId } from "@lib/utils.ts";
-import { type Ref } from "preact";
+import { refFromId, refToHex } from "@lib/utils.ts";
 
 type ArticleProps = {
-  vid: number;
   translation: Translation;
   idx: number;
-  verse: Deno.KvEntry<string>;
+  verse: Verse;
   isLast: boolean;
-  ref?: Ref<HTMLElement> | null;
 };
 
 export default function Article(props: ArticleProps) {
-  const { idx, translation, vid, verse, isLast } = props;
+  const { idx, isLast, translation, verse } = props;
+  const [id, text] = verse;
 
-  const id = getIdFromKvEntry(verse);
   const [b, c, v] = refFromId(id);
   const bookInfo = getBookInfoFromId(id + 1);
   const pericope = getPericope(id);
@@ -27,16 +24,18 @@ export default function Article(props: ArticleProps) {
     );
   }
 
+  const hex = refToHex(b, c, v);
+
   return (
-    <article class="ui w-full h-full snap-start snap-always">
+    <article class={`ui w-full h-full snap-start snap-always bg-[${hex}]`}>
       <div class="info w-full">
-        <h1>{v === 1 ? bookInfo.title_full : bookInfo.title_short}</h1>
-        <h2>Chapter {c} - Verse {v}</h2>
-        <h3>{pericope?.t}</h3>
+        <h1 aria-label="Book Title">{v === 1 ? bookInfo.title_full : bookInfo.title_short}</h1>
+        <h2 aria-label="Book reference">Chapter {c} - Verse {v}</h2>
+        <h3 aria-label="Pericope title">{pericope && pericope.t}</h3>
         <p>#{bookInfo.otnt} #{bookInfo.category} #{translation.toUpperCase()}</p>
-        <small>id: {id}; idx: {idx}; vid: {vid};</small>
+        <small>id: {id}; idx: {idx}; vid: {id};</small>
       </div>
-      <p>{verse.value}</p>
+      <p>{text}</p>
     </article>
   );
 }
