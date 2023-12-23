@@ -1,7 +1,11 @@
 {
   "lock": false,
   "fmt": {
-    "lineWidth": 120
+    "lineWidth": 120,
+    "exclude": [
+      "db/**/*.json",
+      "db/**/*.jsonc"
+    ]
   },
   "tasks": {
     "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
