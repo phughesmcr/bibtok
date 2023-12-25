@@ -48,5 +48,11 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
   },
-  "nodeModulesDir": true
+  "nodeModulesDir": true,
+  "deploy": {
+    "project": "7a27ec5c-40ee-4c1c-988b-63d476d01c6b",
+    "exclude": ["**/scratch/*", "**/db/**/*.db"],
+    "include": [],
+    "entrypoint": "main.ts"
+  }
 }

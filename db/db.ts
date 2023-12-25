@@ -1,9 +1,9 @@
 /// <reference lib="deno.unstable" />
 
-import { API_DEFAULT_PAGE_SIZE, API_DEFAULT_TRANSLATION, DB_PATH, KvPath } from "@lib/constants.ts";
+import { API_DEFAULT_PAGE_SIZE, API_DEFAULT_TRANSLATION, KvPath } from "@lib/constants.ts";
 import { escapeSql } from "escape";
 
-const db = await Deno.openKv(DB_PATH);
+const db = await Deno.openKv();
 
 globalThis.addEventListener("unload", () => db?.close(), { passive: true });
 globalThis.addEventListener("unhandledrejection", () => db?.close(), { passive: true });
