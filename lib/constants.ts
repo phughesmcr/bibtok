@@ -35,3 +35,5 @@ export const enum KvPath {
   CROSSREFS = "crossrefs",
   TRANSLATIONS = "translations",
 }
+
+export const NOOP_CURSOR = "-1" as const;

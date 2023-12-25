@@ -5,11 +5,10 @@ type ArticleProps = {
   translation: Translation;
   idx: number;
   verse: Verse;
-  isLast: boolean;
 };
 
 export default function Article(props: ArticleProps) {
-  const { idx, isLast, translation, verse } = props;
+  const { idx, translation, verse } = props;
   const [id, text] = verse;
 
   const [b, c, v] = refFromId(id);

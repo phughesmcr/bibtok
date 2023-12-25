@@ -24,6 +24,7 @@ export const handler: Handlers<ApiResponse | null> = {
     const res: ApiResponse = {
       ...params,
       verses,
+      cursor: iter.cursor,
     };
 
     return new Response(JSON.stringify(res), {

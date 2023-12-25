@@ -5,6 +5,7 @@ import {
   API_MAX_PAGE_SIZE,
   API_MIN_ID,
   API_MIN_PAGE_SIZE,
+  NOOP_CURSOR,
 } from "./constants.ts";
 
 import { escapeSql } from "escape";
@@ -112,7 +113,7 @@ export function fetchWithParams(origin: string, params: ApiParams) {
   if (startFrom) url.searchParams.set("sv", startFrom.toString());
   if (endAt) url.searchParams.set("ev", endAt.toString());
   if (pageSize) url.searchParams.set("s", pageSize.toString());
-  if (cursor) url.searchParams.set("c", cursor);
+  if (cursor && cursor !== NOOP_CURSOR) url.searchParams.set("c", cursor);
   return fetch(url);
 }
 
@@ -172,4 +173,13 @@ export function memoizeWithLimitedHistory<T extends (...args: any[]) => void>(fn
       return result;
     }
   };
+}
+
+// Fresh Partials helpers
+
+export function createPartialAnchor(href: string | URL, fp: string | URL): HTMLAnchorElement {
+  const anchor = document.createElement("a");
+  anchor.href = href.toString();
+  anchor.setAttribute("f-partial", fp.toString());
+  return anchor;
 }
