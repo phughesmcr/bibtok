@@ -2,11 +2,8 @@ import { Partial } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { API_DEFAULT_PAGE_SIZE, API_DEFAULT_TABLE, APP_NAME } from "@lib/constants.ts";
 import { fetchWithParams, getApiParamsFromUrl } from "@lib/utils.ts";
-import { batch } from "@preact/signals";
-import { useContext } from "preact/hooks";
 import Carousel from "../islands/Carousel.tsx";
 import NavBar from "../islands/NavBar.tsx";
-import { GlobalAppState } from "./_app.tsx";
 
 export const handler: Handlers<ApiResponse> = {
   async GET(req, ctx) {
@@ -19,7 +16,10 @@ export const handler: Handlers<ApiResponse> = {
       if (params.startFrom) url.searchParams.set("sv", params.startFrom.toString() || "");
       if (params.endAt) url.searchParams.set("ev", params.endAt?.toString() || "");
       if (params.cursor) url.searchParams.set("c", params.cursor || "");
-      return Response.redirect(url, 307);
+      return new Response("", {
+        status: 307,
+        headers: { Location: `/?${url.searchParams.toString()}` },
+      });
     }
     const data = await fetchWithParams(url.origin, params);
     const json = await data.json() as ApiResponse;
@@ -28,17 +28,6 @@ export const handler: Handlers<ApiResponse> = {
 };
 
 export default function Home(props: PageProps<ApiResponse>) {
-  const { translation, endAt, pageSize, verses, cursor, startFrom } = useContext(GlobalAppState);
-
-  batch(() => {
-    if (props.data.translation) translation.value = props.data.translation;
-    if (props.data.pageSize) pageSize.value = props.data.pageSize || API_DEFAULT_PAGE_SIZE;
-    startFrom.value = props.data.startFrom;
-    endAt.value = props.data.endAt;
-    cursor.value = props.data.cursor;
-    verses.value = [...verses.peek(), ...props.data.verses];
-  });
-
   return (
     <div
       class="no-interaction w-full h-full"
@@ -55,10 +44,11 @@ export default function Home(props: PageProps<ApiResponse>) {
           role="none"
           id="container"
           class="relative no-interaction w-full h-full"
+          f-client-nav
         >
           <main className="min-w-0 min-h-0 w-full h-full">
             <Partial name="carousel">
-              <Carousel data={verses.value} origin={props.url} />
+              <Carousel res={props.data} />
             </Partial>
           </main>
           <nav className="min-w-0 min-h-0 w-full h-full">

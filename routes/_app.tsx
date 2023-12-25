@@ -70,7 +70,7 @@ export default function App({ Component }: PageProps) {
 
           <link rel="stylesheet" href="styles.css" />
         </head>
-        <body class="no-interaction" f-client-nav>
+        <body class="no-interaction">
           <noscript>You need to enable JavaScript to run this app.</noscript>
           <Component />
         </body>

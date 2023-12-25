@@ -2,7 +2,7 @@ import { getBookInfoFromId, getPericope } from "@data";
 import { refFromId, refToHex } from "@lib/utils.ts";
 
 type ArticleProps = {
-  translation: Translation;
+  translation: string;
   idx: number;
   verse: Verse;
 };

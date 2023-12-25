@@ -1,5 +1,5 @@
 import { Partial } from "$fresh/runtime.ts";
-import { defineRoute, RouteConfig } from "$fresh/server.ts";
+import { defineRoute, type RouteConfig } from "$fresh/server.ts";
 import { fetchWithParams, getApiParamsFromUrl } from "@lib/utils.ts";
 import Carousel from "../../islands/Carousel.tsx";
 
@@ -10,14 +10,12 @@ export const config: RouteConfig = {
 
 export default defineRoute(async (req, ctx) => {
   const params = getApiParamsFromUrl(req.url);
-  const res = await fetchWithParams(req.url, params);
-  const { verses, cursor: newCursor } = await res.json() as ApiResponse;
-  const url = new URL(req.url);
-  url.searchParams.set("c", newCursor || "-1");
+  const data = await fetchWithParams(req.url, params);
+  const res = await data.json() as ApiResponse;
 
   return (
     <Partial name="carousel">
-      <Carousel data={verses} origin={url} />
+      <Carousel res={res} />
     </Partial>
   );
 });
