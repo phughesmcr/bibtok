@@ -1,7 +1,7 @@
 import { Partial } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { API_DEFAULT_PAGE_SIZE, API_DEFAULT_TABLE, APP_NAME } from "@lib/constants.ts";
-import { fetchWithParams, getApiParamsFromUrl } from "@lib/utils.ts";
+import { APP_NAME } from "@lib/constants.ts";
+import { fetchWithParams, getApiParamsFromUrl, setApiParamsInUrl } from "@lib/utils.ts";
 import Carousel from "../islands/Carousel.tsx";
 import NavBar from "../islands/NavBar.tsx";
 
@@ -11,14 +11,9 @@ export const handler: Handlers<ApiResponse> = {
     const url = new URL(req.url);
     const redirect = !["t", "s"].every((key) => url.searchParams.has(key));
     if (redirect) {
-      url.searchParams.set("t", params.translation || API_DEFAULT_TABLE);
-      url.searchParams.set("s", params.pageSize?.toString() || API_DEFAULT_PAGE_SIZE.toString());
-      if (params.startFrom) url.searchParams.set("sv", params.startFrom.toString() || "");
-      if (params.endAt) url.searchParams.set("ev", params.endAt?.toString() || "");
-      if (params.cursor) url.searchParams.set("c", params.cursor || "");
       return new Response("", {
         status: 307,
-        headers: { Location: `/?${url.searchParams.toString()}` },
+        headers: { Location: `/?${setApiParamsInUrl(url, params).searchParams.toString()}` },
       });
     }
     const data = await fetchWithParams(url.origin, params);
@@ -28,6 +23,9 @@ export const handler: Handlers<ApiResponse> = {
 };
 
 export default function Home(props: PageProps<ApiResponse>) {
+  const { data } = props;
+  const nextUrl = setApiParamsInUrl(new URL(props.url), data);
+
   return (
     <div
       class="no-interaction w-full h-full"
@@ -48,7 +46,7 @@ export default function Home(props: PageProps<ApiResponse>) {
         >
           <main className="min-w-0 min-h-0 w-full h-full">
             <Partial name="carousel">
-              <Carousel res={props.data} />
+              <Carousel res={props.data} next={nextUrl} />
             </Partial>
           </main>
           <nav className="min-w-0 min-h-0 w-full h-full">

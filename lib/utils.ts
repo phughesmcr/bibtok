@@ -106,6 +106,16 @@ export function getApiParamsFromUrl(url: string): ApiParams {
   return { translation, startFrom, endAt, cursor, pageSize };
 }
 
+export function setApiParamsInUrl(url: string | URL, params: ApiParams): URL {
+  const res = new URL(url.toString());
+  res.searchParams.set("t", params.translation || API_DEFAULT_TRANSLATION);
+  res.searchParams.set("s", params.pageSize?.toString() || API_DEFAULT_PAGE_SIZE.toString());
+  if (params.startFrom) res.searchParams.set("sv", params.startFrom.toString() || "");
+  if (params.endAt) res.searchParams.set("ev", params.endAt?.toString() || "");
+  if (params.cursor) res.searchParams.set("c", params.cursor || "");
+  return res;
+}
+
 export function fetchWithParams(origin: string, params: ApiParams) {
   const { translation, startFrom, endAt, pageSize, cursor } = params;
   const url = new URL(`${origin}/api/v1/verses`);

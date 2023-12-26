@@ -27,8 +27,7 @@ export const API_MAX_PAGE_SIZE = 100 as const;
 export const API_MIN_PAGE_SIZE = 1 as const;
 export const API_MIN_ID = 1001001 as const;
 
-// export const DB_PATH = "./db/bible.db" as const;
-export const DB_PATH =  "https://api.deno.com/databases/def1c51f-5404-4974-91b9-1074422940ee/connect" as const;
+export const DB_LOCAL_PATH = "./db/bible.db" as const;
 
 export const enum KvPath {
   BOOKS = "books",

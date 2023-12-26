@@ -2,13 +2,12 @@ import Article from "../components/Article.tsx";
 
 type CarouselProps = {
   res: ApiResponse;
+  next?: URL;
 };
 
 export default function Carousel(props: CarouselProps) {
-  const { res } = props;
+  const { res, next } = props;
   const { verses, cursor, endAt, pageSize, startFrom, translation } = res;
-
-  const nextParams = `?t=${translation}&s=${pageSize}&c=${cursor || ""}&sv=${startFrom || ""}&ev=${endAt || ""}`;
 
   return (
     <>
@@ -22,9 +21,9 @@ export default function Carousel(props: CarouselProps) {
           />
         ))}
         {/*f-partial={`/partials/feed${nextParams}`} */}
-        {cursor && (
+        {next && (
           <a
-            href={`/${nextParams}`}
+            href={next.toString()}
             class="w-full h-full snap-start snap-always flex items-center justify-center"
             onClick={(e) => {
               e.currentTarget.parentElement?.scrollTo({ top: 0 });
