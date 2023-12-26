@@ -36,4 +36,5 @@ declare type ApiParams = {
 
 declare type ApiResponse = ApiParams & {
   verses: Verse[];
+  error?: number;
 };

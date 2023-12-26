@@ -112,7 +112,13 @@ export function setApiParamsInUrl(url: string | URL, params: ApiParams): URL {
   res.searchParams.set("s", params.pageSize?.toString() || API_DEFAULT_PAGE_SIZE.toString());
   if (params.startFrom) res.searchParams.set("sv", params.startFrom.toString() || "");
   if (params.endAt) res.searchParams.set("ev", params.endAt?.toString() || "");
-  if (params.cursor) res.searchParams.set("c", params.cursor || "");
+  if (params.cursor) {
+    if (params.cursor === NOOP_CURSOR) {
+      res.searchParams.set("c", "");
+    } else {
+      res.searchParams.set("c", params.cursor || "");
+    }
+  }
   return res;
 }
 

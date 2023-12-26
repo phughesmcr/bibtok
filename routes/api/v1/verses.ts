@@ -8,6 +8,9 @@ export const handler: Handlers<ApiResponse | null> = {
     const params = getApiParamsFromUrl(req.url);
     const { cursor, pageSize, translation, startFrom, endAt } = params;
 
+    // construct initial response
+    const res: ApiResponse = { ...params, verses: [] };
+
     // query the database
     const iter = getPageOfVerses({
       translation,
@@ -18,17 +21,18 @@ export const handler: Handlers<ApiResponse | null> = {
     });
 
     // unroll the iterator
-    const verses: Verse[] = [];
-    for await (const verse of iter) {
-      verses.push([getIdFromKvEntry(verse), verse.value]);
+    try {
+      for await (const verse of iter) {
+        res.verses.push([getIdFromKvEntry(verse), verse.value]);
+      }
+      // update the cursor
+      res.cursor = iter.cursor;
+    } catch (err) {
+      console.error(err);
+      if (err.message.includes(cursor)) {
+        res.error = 101;
+      }
     }
-
-    // construct the response
-    const res: ApiResponse = {
-      ...params,
-      verses,
-      cursor: iter.cursor,
-    };
 
     // return the response as JSON
     return new Response(JSON.stringify(res), {

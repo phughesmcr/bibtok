@@ -16,14 +16,27 @@ export const handler: Handlers<ApiResponse> = {
         headers: { Location: `/?${setApiParamsInUrl(url, params).searchParams.toString()}` },
       });
     }
-    const data = await fetchWithParams(url.origin, params);
-    const json = await data.json() as ApiResponse;
-    return ctx.render(json);
+    try {
+      const data = await fetchWithParams(url.origin, params);
+      const json = await data.json() as ApiResponse;
+      if (json.error && json.error === 101) {
+        delete params["cursor"];
+        return new Response("", {
+          status: 307,
+          headers: { Location: `/?${setApiParamsInUrl(url, params).searchParams.toString()}` },
+        });
+      }
+      return ctx.render(json);
+    } catch (err) {
+      console.error(err);
+      return new Response("Internal Server Error", { status: 500 });
+    }
   },
 };
 
 export default function Home(props: PageProps<ApiResponse>) {
   const { data } = props;
+
   const nextUrl = setApiParamsInUrl(new URL(props.url), data);
 
   return (
