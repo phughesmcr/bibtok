@@ -14,13 +14,13 @@ export const handler: Handlers<ApiResponse> = {
     if (redirect) {
       return new Response("", {
         status: 307,
-        headers: { Location: setApiParamsInUrl(url, params).href },
+        headers: { Location: `/${setApiParamsInUrl(url, params).searchParams.toString()}` },
       });
     }
 
     try {
       const data = await fetchWithParams(url.origin, params);
-      // if (!data.ok) throw new Error("Bad response");
+      if (!data.ok) throw new Error(data.statusText);
       const json = await data.json() as ApiResponse;
       return ctx.render(json);
     } catch (err) {
