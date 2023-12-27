@@ -1,3 +1,4 @@
+import { asset } from "$fresh/runtime.ts";
 import { type PageProps } from "$fresh/server.ts";
 import {
   APP_NAME,
@@ -63,7 +64,7 @@ export default function App({ Component }: PageProps) {
         <link rel="apple-touch-icon" href="img/android-chrome-512x512.png" />
         <link rel="manifest" href="site.webmanifest" crossorigin="use-credentials" />
 
-        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href={asset("styles.css")} />
       </head>
       <body class="no-interaction">
         <noscript>You need to enable JavaScript to run this app.</noscript>
