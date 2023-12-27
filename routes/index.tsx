@@ -20,6 +20,7 @@ export const handler: Handlers<ApiResponse> = {
 
     try {
       const data = await fetchWithParams(url.origin, params);
+      console.log(data, params);
       const json = await data.json() as ApiResponse;
       return ctx.render(json);
     } catch (err) {
