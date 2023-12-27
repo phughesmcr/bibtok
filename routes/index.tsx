@@ -20,7 +20,7 @@ export const handler: Handlers<ApiResponse> = {
 
     try {
       const data = await fetchWithParams(url.origin, params);
-      if (!data.ok) throw new Error("Bad response");
+      // if (!data.ok) throw new Error("Bad response");
       const json = await data.json() as ApiResponse;
       return ctx.render(json);
     } catch (err) {
