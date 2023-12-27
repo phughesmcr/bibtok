@@ -9,23 +9,18 @@ export const handler: Handlers<ApiResponse> = {
   async GET(req, ctx) {
     const params = getApiParamsFromUrl(req.url);
     const url = new URL(req.url);
+
     const redirect = !["t", "s"].every((key) => url.searchParams.has(key));
     if (redirect) {
       return new Response("", {
         status: 307,
-        headers: { Location: `/?${setApiParamsInUrl(url, params).searchParams.toString()}` },
+        headers: { Location: setApiParamsInUrl(url, params).href },
       });
     }
+
     try {
       const data = await fetchWithParams(url.origin, params);
       const json = await data.json() as ApiResponse;
-      if (json.error && json.error === 101) {
-        delete params["cursor"];
-        return new Response("", {
-          status: 307,
-          headers: { Location: `/?${setApiParamsInUrl(url, params).searchParams.toString()}` },
-        });
-      }
       return ctx.render(json);
     } catch (err) {
       console.error(err);
