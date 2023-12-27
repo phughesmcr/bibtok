@@ -20,7 +20,6 @@ export default function Carousel(props: CarouselProps) {
             verse={verse}
           />
         ))}
-        {/*f-partial={`/partials/feed${nextParams}`} */}
         {next && (
           <a
             href={next.toString()}
@@ -29,7 +28,7 @@ export default function Carousel(props: CarouselProps) {
               e.currentTarget.parentElement?.scrollTo({ top: 0 });
             }}
           >
-            <span class="text-2xl">Load more</span>
+            <span class="text-2xl underline">Load more</span>
           </a>
         )}
       </div>

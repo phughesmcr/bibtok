@@ -45,8 +45,8 @@ export default function App({ Component }: PageProps) {
         <meta property="og:title" content={APP_NAME} />
         <meta property="og:description" content={META_DESCRIPTION} />
         <meta property="og:url" content={LINK_CANONICAL} />
-        <meta property="og:image" content={`${LINK_CANONICAL}/img/android-chrome-512x512.png`} />
-        <meta property="og:image:secure_url" content={`${LINK_CANONICAL}/img/android-chrome-512x512.png`} />
+        <meta property="og:image" content={asset(`${LINK_CANONICAL}/img/android-chrome-512x512.png`)} />
+        <meta property="og:image:secure_url" content={asset(`${LINK_CANONICAL}/img/android-chrome-512x512.png`)} />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="512" />
         <meta property="og:image:height" content="512" />
@@ -54,19 +54,19 @@ export default function App({ Component }: PageProps) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={APP_NAME} />
         <meta name="twitter:description" content={META_DESCRIPTION} />
-        <meta name="twitter:image:src" content={`${LINK_CANONICAL}/img/card.png`} />
+        <meta name="twitter:image:src" content={asset(`${LINK_CANONICAL}/img/card.png`)} />
 
-        <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+        <link rel="sitemap" type="application/xml" title="Sitemap" href={asset("/sitemap.xml")} />
         <link rel="canonical" href={LINK_CANONICAL} />
         <link rel="shortlink" href={LINK_CANONICAL.slice(12)} />
 
-        <link rel="icon" href="img/android-chrome-48x48.png" sizes="48x48" type="image/png" />
-        <link rel="apple-touch-icon" href="img/android-chrome-512x512.png" />
-        <link rel="manifest" href="site.webmanifest" crossorigin="use-credentials" />
+        <link rel="icon" href={asset("img/android-chrome-48x48.png")} sizes="48x48" type="image/png" />
+        <link rel="apple-touch-icon" href={asset("img/android-chrome-512x512.png")} />
+        <link rel="manifest" href={asset("site.webmanifest")} crossorigin="use-credentials" />
 
         <link rel="stylesheet" href={asset("styles.css")} />
       </head>
-      <body class="no-interaction">
+      <body class="no-interaction bg-zinc-950 text-zinc-100">
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <Component />
       </body>

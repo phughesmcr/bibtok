@@ -1,5 +1,5 @@
 import { getBookInfoFromId, getPericope } from "@data";
-import { refFromId, refToHex } from "@lib/utils.ts";
+import { refFromId } from "@lib/utils.ts";
 
 type ArticleProps = {
   translation: string;
@@ -23,16 +23,13 @@ export default function Article(props: ArticleProps) {
     );
   }
 
-  const hex = refToHex(b, c, v);
-
   return (
-    <article class={`ui w-full h-full snap-start snap-always bg-[${hex}]`}>
+    <article class={`ui w-full h-full snap-start snap-always`}>
       <div class="info w-full">
         <h1 aria-label="Book Title">{v === 1 ? bookInfo.title_full : bookInfo.title_short}</h1>
         <h2 aria-label="Book reference">Chapter {c} - Verse {v}</h2>
-        <h3 aria-label="Pericope title">{pericope && pericope.t}</h3>
-        <p>#{bookInfo.otnt} #{bookInfo.category} #{translation.toUpperCase()}</p>
-        <small>id: {id}; idx: {idx}; vid: {id};</small>
+        <h3 aria-label="Pericope title">{pericope?.t}</h3>
+        <p>#${id} #{bookInfo.otnt} #{bookInfo.category} #{translation.toUpperCase()}</p>
       </div>
       <p>{text}</p>
     </article>

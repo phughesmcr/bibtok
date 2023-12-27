@@ -13,13 +13,13 @@ export const META_VIEWPORT = "width=device-width, initial-scale=1.0, viewport-fi
 export const META_KEYWORDS = "bible, jesus, tiktok, social media, faith, answers, easy, beginner" as const;
 export const META_ROBOTS = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" as const;
 export const META_AUTHOR = "Peter Hughes - www.phugh.es" as const;
-export const META_THEME_COLOR = "#000000" as const;
+export const META_THEME_COLOR = "#0284c7" as const;
 export const META_COLOR_SCHEME = "dark" as const;
 
 export const LINK_CANONICAL = "https://www.phugh.es/bibtok" as const;
 
 export const API_DEFAULT_ID = 1001001 as const;
-export const API_DEFAULT_PAGE_SIZE = 25 as const;
+export const API_DEFAULT_PAGE_SIZE = 50 as const;
 export const API_DEFAULT_TABLE = "t_kjv" as const;
 export const API_DEFAULT_TRANSLATION: Translation = "kjv" as const;
 export const API_MAX_ID = 66022021 as const;
