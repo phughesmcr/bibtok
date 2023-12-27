@@ -7,25 +7,16 @@ import NavBar from "../islands/NavBar.tsx";
 
 export const handler: Handlers<ApiResponse> = {
   async GET(req, ctx) {
-    const params = getApiParamsFromUrl(req.url);
-    const url = new URL(req.url);
-
-    const redirect = !["t", "s"].every((key) => url.searchParams.has(key));
-    if (redirect) {
-      return new Response("", {
-        status: 307,
-        headers: { Location: `/${setApiParamsInUrl(url, params).searchParams.toString()}` },
-      });
-    }
-
     try {
+      const params = getApiParamsFromUrl(req.url);
+      const url = new URL(req.url);
       const data = await fetchWithParams(url.origin, params);
       if (!data.ok) throw new Error(data.statusText);
       const json = await data.json() as ApiResponse;
       return ctx.render(json);
     } catch (err) {
       console.error(err);
-      return new Response("Internal Server Error", { status: 500 });
+      return ctx.renderNotFound();
     }
   },
 };
@@ -55,7 +46,7 @@ export default function Home(props: PageProps<ApiResponse>) {
         >
           <main className="min-w-0 min-h-0 w-full h-full">
             <Partial name="carousel">
-              <Carousel res={props.data} next={nextUrl} />
+              <Carousel res={data} next={nextUrl} />
             </Partial>
           </main>
           <nav className="min-w-0 min-h-0 w-full h-full">

@@ -2,7 +2,7 @@ import { Handlers } from "$fresh/server.ts";
 import { getPageOfVerses } from "@db";
 import { getApiParamsFromUrl, getIdFromKvEntry } from "@lib/utils.ts";
 
-export const handler: Handlers<ApiResponse> = {
+export const handler: Handlers<ApiResponse | null> = {
   async GET(req, _ctx) {
     try {
       // fetch search params from url

@@ -5,8 +5,8 @@ import { escapeSql } from "escape";
 
 const db = await Deno.openKv();
 
-globalThis.addEventListener("unload", () => db?.close(), { passive: true });
-globalThis.addEventListener("unhandledrejection", () => db?.close(), { passive: true });
+// globalThis.addEventListener("unload", () => db?.close(), { passive: true });
+// globalThis.addEventListener("unhandledrejection", () => db?.close(), { passive: true });
 
 export const getBookInfoFromDb = (book: number): Promise<BookInfo | null> => {
   const cleanedId = parseInt(escapeSql(book.toString()), 10);
