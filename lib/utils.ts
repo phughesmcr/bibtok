@@ -62,7 +62,9 @@ export function refFromUrl(url: string): number {
 
 // API helpers
 
-export function conformTranslation(translation: string): Translation {
+export function conformTranslation(params: URLSearchParams): Translation | null {
+  const translation = params.get("t") || params.get("translation");
+  if (!translation) return null;
   const cleanedTranslation = escapeSql(translation.toLowerCase().trim());
   switch (cleanedTranslation) {
     case "asv":
@@ -71,52 +73,69 @@ export function conformTranslation(translation: string): Translation {
     case "web":
       return cleanedTranslation;
     default:
-      return API_DEFAULT_TRANSLATION;
+      return null;
   }
 }
 
-export function conformPageSize(pageSize: string) {
+export function conformPageSize(params: URLSearchParams): number | null {
+  const pageSize = params.get("s") || params.get("size");
+  if (!pageSize) return null;
+  const cleanedPageSize = Math.abs(parseInt(escapeSql(pageSize.trim()), 10));
+  if (isNaN(cleanedPageSize)) return null;
   return clamp(
-    Math.abs(parseInt(escapeSql(pageSize), 10)),
+    cleanedPageSize,
     API_MIN_PAGE_SIZE,
     API_MAX_PAGE_SIZE,
   );
 }
 
-export function conformStartFrom(id: string | null): number | undefined {
-  return id ? parseInt(escapeSql(id), 10) : undefined;
+export function conformStartFrom(params: URLSearchParams): number | undefined | null {
+  const startFrom = params.get("sv") || params.get("start") || params.get("startFrom");
+  if (!startFrom) return undefined;
+  const cleanedStartFrom = Math.abs(parseInt(escapeSql(startFrom.trim()), 10));
+  if (isNaN(cleanedStartFrom)) return null;
+  return cleanedStartFrom;
 }
 
-export function conformEndAt(endAt: string | null): number | undefined {
-  return endAt ? parseInt(escapeSql(endAt), 10) || undefined : undefined;
+export function conformEndAt(params: URLSearchParams): number | undefined | null {
+  const endAt = params.get("ev") || params.get("end") || params.get("endAt");
+  if (!endAt) return undefined;
+  const cleanedEndAt = Math.abs(parseInt(escapeSql(endAt.trim()), 10));
+  if (isNaN(cleanedEndAt)) return null;
+  return cleanedEndAt;
 }
 
-export function conformCursor(cursor: string | null): string | undefined {
-  return cursor ? escapeSql(cursor) : undefined;
+export function conformCursor(params: URLSearchParams): string | undefined | null {
+  const cursor = params.get("c");
+  if (!cursor) return undefined;
+  const cleanedCursor = escapeSql(cursor.trim());
+  if (!cleanedCursor) return null;
+  return cleanedCursor;
 }
 
-export function getApiParamsFromUrl(url: string): ApiParams {
-  const requestUrl = new URL(url);
-  const searchParams = requestUrl.searchParams;
-  const translation = conformTranslation(searchParams.get("t") || `${API_DEFAULT_TRANSLATION}`);
-  const pageSize = conformPageSize(searchParams.get("s") || `${API_DEFAULT_PAGE_SIZE}`);
-  const startFrom = conformStartFrom(searchParams.get("sv"));
-  const endAt = conformEndAt(searchParams.get("ev"));
-  const cursor = conformCursor(searchParams.get("c"));
+export function getApiParamsFromUrl(url: string | URL): ApiParams {
+  const { searchParams } = new URL(url);
+  const translation = conformTranslation(searchParams) ?? API_DEFAULT_TRANSLATION;
+  const pageSize = conformPageSize(searchParams) ?? API_DEFAULT_PAGE_SIZE;
+  const startFrom = conformStartFrom(searchParams) ?? undefined;
+  const endAt = conformEndAt(searchParams) ?? undefined;
+  const cursor = conformCursor(searchParams) ?? undefined;
   return { translation, startFrom, endAt, cursor, pageSize };
 }
 
 export function setApiParamsInUrl(url: string | URL, params: ApiParams): URL {
-  const res = new URL(url.toString());
-  res.searchParams.set("t", params.translation || API_DEFAULT_TRANSLATION);
-  res.searchParams.set("s", params.pageSize?.toString() || API_DEFAULT_PAGE_SIZE.toString());
-  if (params.startFrom) res.searchParams.set("sv", params.startFrom.toString() || "");
-  if (params.endAt) res.searchParams.set("ev", params.endAt?.toString() || "");
-  if (params.cursor) {
-    if (params.cursor === NOOP_CURSOR) {
-      res.searchParams.set("c", "");
+  const { translation, startFrom, endAt, cursor, pageSize } = params;
+  const res = new URL(url);
+  const { searchParams } = res;
+  searchParams.set("t", translation || API_DEFAULT_TRANSLATION);
+  searchParams.set("s", pageSize?.toString() || API_DEFAULT_PAGE_SIZE.toString());
+  if (startFrom) searchParams.set("sv", startFrom.toString() || "");
+  if (endAt) searchParams.set("ev", endAt.toString() || "");
+  if (cursor) {
+    if (cursor === NOOP_CURSOR) {
+      searchParams.set("c", "");
     } else {
-      res.searchParams.set("c", params.cursor || "");
+      searchParams.set("c", cursor || "");
     }
   }
   return res;
