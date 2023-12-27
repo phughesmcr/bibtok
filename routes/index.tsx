@@ -1,7 +1,8 @@
 import { Partial } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { getPageOfVerses } from "@db";
 import { APP_NAME } from "@lib/constants.ts";
-import { fetchWithParams, getApiParamsFromUrl, setApiParamsInUrl } from "@lib/utils.ts";
+import { getApiParamsFromUrl, getIdFromKvEntry, setApiParamsInUrl } from "@lib/utils.ts";
 import Carousel from "../islands/Carousel.tsx";
 import NavBar from "../islands/NavBar.tsx";
 
@@ -9,11 +10,13 @@ export const handler: Handlers<ApiResponse> = {
   async GET(req, ctx) {
     try {
       const params = getApiParamsFromUrl(req.url);
-      const url = new URL(req.url);
-      const data = await fetchWithParams(url.origin, params);
-      if (!data.ok) throw new Error(data.statusText);
-      const json = await data.json() as ApiResponse;
-      return ctx.render(json);
+      const url = setApiParamsInUrl(new URL(req.url), params);
+      const iter = await getPageOfVerses(params);
+      const verses: Verse[] = [];
+      for await (const verse of iter) {
+        verses.push([getIdFromKvEntry(verse), verse.value]);
+      }
+      return ctx.render({ ...params, verses, cursor: iter.cursor });
     } catch (err) {
       console.error(err);
       return ctx.renderNotFound();

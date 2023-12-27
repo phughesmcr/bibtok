@@ -9,7 +9,11 @@ export const handler: Handlers<TestProps> = {
   async GET(req, ctx) {
     try {
       const res = await getPageOfVerses({ translation: "web", pageSize: 10 });
-      return ctx.render({ res: JSON.stringify(res, null, 2) });
+      const r = [];
+      for await (const verse of res) {
+        r.push(verse);
+      }
+      return ctx.render({ res: JSON.stringify(r, null, 2) });
     } catch (err) {
       console.error(err);
       return ctx.renderNotFound();
