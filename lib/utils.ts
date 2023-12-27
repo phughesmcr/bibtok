@@ -145,9 +145,9 @@ export function fetchWithParams(origin: string, params: ApiParams) {
   const { translation, startFrom, endAt, pageSize, cursor } = params;
   const url = new URL(`${origin}/api/v1/verses`);
   url.searchParams.set("t", translation || API_DEFAULT_TRANSLATION);
+  url.searchParams.set("s", pageSize?.toString() || API_DEFAULT_PAGE_SIZE.toString());
   if (startFrom) url.searchParams.set("sv", startFrom.toString());
   if (endAt) url.searchParams.set("ev", endAt.toString());
-  if (pageSize) url.searchParams.set("s", pageSize.toString());
   if (cursor && cursor !== NOOP_CURSOR) url.searchParams.set("c", cursor);
   return fetch(url);
 }
