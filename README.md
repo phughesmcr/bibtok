@@ -1,4 +1,4 @@
-# BibTok
+# HolyScroller
 
 A simple way of reading Public-Domain Bible translations using infinite scrolling.
 

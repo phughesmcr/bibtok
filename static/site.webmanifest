@@ -1,6 +1,6 @@
 {
-  "short_name": "BibTok",
-  "name": "BibTok",
+  "short_name": "HolyScroller",
+  "name": "HolyScroller",
   "theme_color": "#0284c7",
   "background_color": "#09090b",
   "start_url": ".",
@@ -8,7 +8,7 @@
   "dir": "ltr",
   "lang": "en",
   "orientation": "portrait",
-  "description": "BibTok PWA",
+  "description": "HolyScroller PWA",
   "icons": [
     {
       "src": "/img/android-chrome-48x48.png",
