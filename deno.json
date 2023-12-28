@@ -3,8 +3,9 @@
   "fmt": {
     "lineWidth": 120,
     "exclude": [
-      "db/**/*.json",
-      "db/**/*.jsonc"
+      "**/*.json",
+      "**/*.jsonc",
+      "**/*.md"
     ]
   },
   "tasks": {

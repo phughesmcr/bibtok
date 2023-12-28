@@ -3,9 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-
-}
 html, body {
   width: 100%;
   border: none;
@@ -85,24 +82,36 @@ article.ui .info h1 {
   margin: 0;
   padding: 0;
 }
+article.ui .info h2 {
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+article.ui .info h3 {
+  font-size: 0.7rem;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
 article.ui .info p {
-  font-size: 1rem;
+  font-size: 0.6rem;
   font-weight: 400;
   margin: 0;
   padding: 0;
 }
 article.ui .info small {
-  font-size: 0.75rem;
-  font-weight: 400;
+  font-size: 0.5rem;
+  font-weight: 200;
   margin: 0;
   padding: 0;
 }
 article.ui > p {
   font-size: 1.5rem;
   font-weight: 400;
-  margin: 0;
+  margin: 0 0 1rem 0;
   padding: 0;
-  text-align: center;
+  text-align: left;
   max-width: 90%;
   max-height: 100%;
 }

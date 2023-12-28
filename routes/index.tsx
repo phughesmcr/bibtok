@@ -1,8 +1,8 @@
 import { Partial } from "$fresh/runtime.ts";
-import { Handlers, PageProps } from "$fresh/server.ts";
+import type { Handlers, PageProps } from "$fresh/server.ts";
 import { getPageOfVerses } from "@db";
-import { APP_NAME } from "@lib/constants.ts";
 import { getApiParamsFromUrl, getIdFromKvEntry, setApiParamsInUrl } from "@lib/utils.ts";
+import AppContainer from "../components/AppContainer.tsx";
 import Carousel from "../islands/Carousel.tsx";
 import NavBar from "../islands/NavBar.tsx";
 
@@ -10,7 +10,6 @@ export const handler: Handlers<ApiResponse> = {
   async GET(req, ctx) {
     try {
       const params = getApiParamsFromUrl(req.url);
-      const url = setApiParamsInUrl(new URL(req.url), params);
       const iter = await getPageOfVerses(params);
       const verses: Verse[] = [];
       for await (const verse of iter) {
@@ -30,33 +29,15 @@ export default function Home(props: PageProps<ApiResponse>) {
   const nextUrl = setApiParamsInUrl(new URL(props.url), data);
 
   return (
-    <div
-      class="no-interaction w-full h-full"
-      role="application"
-      id={APP_NAME}
-      name={APP_NAME}
-      aria-label={APP_NAME}
-    >
-      <div
-        role="none"
-        class="z-0 top-0 left-0 absolute overflow-hidden no-interaction w-full h-full"
-      >
-        <div
-          role="none"
-          id="container"
-          class="relative no-interaction w-full h-full"
-          f-client-nav
-        >
-          <main className="min-w-0 min-h-0 w-full h-full">
-            <Partial name="carousel">
-              <Carousel res={data} next={nextUrl} />
-            </Partial>
-          </main>
-          <nav className="min-w-0 min-h-0 w-full h-full">
-            <NavBar />
-          </nav>
-        </div>
-      </div>
-    </div>
+    <AppContainer>
+      <main role="main" className="min-w-0 min-h-0 w-full h-full">
+        <Partial name="carousel">
+          <Carousel res={data} next={nextUrl} />
+        </Partial>
+      </main>
+      <nav role="navigation" className="min-w-0 min-h-0 w-full h-full">
+        <NavBar />
+      </nav>
+    </AppContainer>
   );
 }

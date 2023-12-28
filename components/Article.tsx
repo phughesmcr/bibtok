@@ -29,7 +29,7 @@ export default function Article(props: ArticleProps) {
         <h1 aria-label="Book Title">{v === 1 ? bookInfo.title_full : bookInfo.title_short}</h1>
         <h2 aria-label="Book reference">Chapter {c} - Verse {v}</h2>
         <h3 aria-label="Pericope title">{pericope?.t}</h3>
-        <p>#${id} #{bookInfo.otnt} #{bookInfo.category} #{translation.toUpperCase()}</p>
+        <p>#{bookInfo.otnt} #{bookInfo.category.replace(/\s+/, "")} #{translation.toUpperCase()} #{id}</p>
       </div>
       <p>{text}</p>
     </article>

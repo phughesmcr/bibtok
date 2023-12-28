@@ -20,7 +20,6 @@ export const LINK_CANONICAL = "https://www.phugh.es/bibtok" as const;
 
 export const API_DEFAULT_ID = 1001001 as const;
 export const API_DEFAULT_PAGE_SIZE = 50 as const;
-export const API_DEFAULT_TABLE = "t_kjv" as const;
 export const API_DEFAULT_TRANSLATION: Translation = "kjv" as const;
 export const API_MAX_ID = 66022021 as const;
 export const API_MAX_PAGE_SIZE = 100 as const;
@@ -28,6 +27,11 @@ export const API_MIN_PAGE_SIZE = 1 as const;
 export const API_MIN_ID = 1001001 as const;
 
 export const DB_LOCAL_PATH = "./db/bible.db" as const;
+
+export const PSALMS_START = 19001001 as const;
+export const PSALMS_END = 19015006 as const;
+export const PROVERBS_START = 20001001 as const;
+export const PROVERBS_END = 20031031 as const;
 
 export const enum KvPath {
   BOOKS = "books",
