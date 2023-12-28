@@ -1,6 +1,7 @@
 import { Partial } from "$fresh/runtime.ts";
 import { defineRoute, type RouteConfig } from "$fresh/server.ts";
-import { fetchWithParams, getApiParamsFromUrl, setApiParamsInUrl } from "@lib/utils.ts";
+import { getPageOfVerses } from "@db";
+import { getApiParamsFromUrl, getIdFromKvEntry, setApiParamsInUrl } from "@lib/utils.ts";
 import Carousel from "../../islands/Carousel.tsx";
 
 export const config: RouteConfig = {
@@ -10,14 +11,18 @@ export const config: RouteConfig = {
 
 export default defineRoute(async (req, ctx) => {
   const params = getApiParamsFromUrl(req.url);
-  const data = await fetchWithParams(req.url, params);
-  const res = await data.json() as ApiResponse;
-  if (res.cursor && res.cursor !== "-1") {
-    delete res["cursor"];
+  const iter = await getPageOfVerses(params);
+  const verses: Verse[] = [];
+  for await (const verse of iter) {
+    verses.push([getIdFromKvEntry(verse), verse.value]);
   }
+  const res = { ...params, verses, cursor: iter.cursor };
+  const next = setApiParamsInUrl(new URL(req.url).origin, res);
+  const fp = new URL(next);
+  fp.pathname = "/partials/feed";
   return (
     <Partial name="carousel">
-      <Carousel res={res} next={res.cursor ? setApiParamsInUrl(new URL(req.url), res) : undefined} />
+      <Carousel res={res} next={next} fp={fp} />
     </Partial>
   );
 });

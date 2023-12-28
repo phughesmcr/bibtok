@@ -27,12 +27,14 @@ export default function Home(props: PageProps<ApiResponse>) {
   const { data } = props;
 
   const nextUrl = setApiParamsInUrl(new URL(props.url), data);
+  const fp = new URL(nextUrl);
+  fp.pathname = "/partials/feed";
 
   return (
     <AppContainer>
       <main role="main" className="min-w-0 min-h-0 w-full h-full">
         <Partial name="carousel">
-          <Carousel res={data} next={nextUrl} />
+          <Carousel res={data} next={nextUrl} fp={fp} />
         </Partial>
       </main>
       <nav role="navigation" className="min-w-0 min-h-0 w-full h-full">

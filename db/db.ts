@@ -1,9 +1,9 @@
 /// <reference lib="deno.unstable" />
 
-import { API_DEFAULT_PAGE_SIZE, API_DEFAULT_TRANSLATION, KvPath } from "@lib/constants.ts";
+import { API_DEFAULT_PAGE_SIZE, API_DEFAULT_TRANSLATION, DB_LOCAL_PATH, KvPath } from "@lib/constants.ts";
 import { escapeSql } from "escape";
 
-const db = await Deno.openKv();
+const db = await Deno.openKv(DB_LOCAL_PATH);
 
 globalThis.addEventListener("unload", () => db?.close(), { passive: true });
 globalThis.addEventListener("unhandledrejection", () => db?.close(), { passive: true });
@@ -37,6 +37,6 @@ export const getPageOfVerses = (params: ApiParams) => {
   const end: Deno.KvKey | undefined = cleanedEndAt ? [...basePath, cleanedEndAt] : undefined;
   const prefix: Deno.KvKey | undefined = (start && end) ? undefined : [KvPath.TRANSLATIONS, cleanedTranslation];
 
-  // @ts-ignore
+  // @ts-ignore: undefined is fine for now
   return db.list<string>({ prefix, start, end }, { limit: cleanedPageSize, cursor: cleanedCursor });
 };

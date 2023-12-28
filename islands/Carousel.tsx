@@ -3,12 +3,12 @@ import Article from "../components/Article.tsx";
 type CarouselProps = {
   res: ApiResponse;
   next?: URL;
+  fp?: URL;
 };
 
 export default function Carousel(props: CarouselProps) {
-  const { res, next } = props;
+  const { res, next, fp } = props;
   const { verses, cursor, endAt, pageSize, startFrom, translation } = res;
-
   return (
     <>
       <div role="feed" class="w-full h-full overflow-y-auto hide-scrollbars touch-pan-y snap-y snap-mandatory p-2">
@@ -20,9 +20,10 @@ export default function Carousel(props: CarouselProps) {
             verse={verse}
           />
         ))}
-        {next && (
+        {next && fp && (
           <a
             href={next.toString()}
+            f-partial={fp.toString()}
             class="w-full h-full snap-start snap-always flex items-center justify-center"
             onClick={(e) => {
               e.currentTarget.parentElement?.scrollTo({ top: 0 });
