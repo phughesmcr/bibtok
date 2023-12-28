@@ -27,3 +27,7 @@ It contains the following tables, where [id] is an integer in the format BBCCCVV
 The `pericopes.json` file is a JSON version of the file `2450.Pericopes.xls` from
 [the OP on this forum thread](https://community.logos.com/forums/t/70978.aspx) created by user "Robert M. Warren"
 Posted: Sun, Jun 2 2013 8:04 AM. No license is specified.
+
+## catechism.json
+
+The 1662 Book of Common Prayer's "A Catechism". Extracts from The Book of Common Prayer, the rights in which are vested in the Crown, are reproduced by permission of the Crown's patentee, Cambridge University Press.

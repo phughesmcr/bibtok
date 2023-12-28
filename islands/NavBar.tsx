@@ -29,12 +29,8 @@ export default function NavBar() {
         <span className="text-xs">Proverbs</span>
       </a>
       <a
-        href=""
+        href="/catechism"
         className="flex flex-col items-center justify-center"
-        onClick={(e) => {
-          e.preventDefault();
-          alert("Coming soon");
-        }}
       >
         <span className="text-2xl">
           <IconZoomQuestion class="w-6 h-6" />

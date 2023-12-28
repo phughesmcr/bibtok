@@ -116,23 +116,26 @@ article.ui > p {
   max-height: 100%;
 }
 
-article.ui.catechism h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
+article.ui.catechism h1,
+article.ui.catechism p,
+article.ui.catechism small {
   margin: 0 0 1rem 0;
   padding: 0;
   text-align: left;
-  max-width: 90%;
+  width: 90%;
   max-height: 100%;
+}
+article.ui.catechism h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 article.ui.catechism p {
   font-size: 1.33rem;
   font-weight: 400;
-  margin: 0 0 1rem 0;
-  padding: 0;
-  text-align: left;
-  max-width: 90%;
-  max-height: 100%;
+}
+article.ui.catechism small {
+  font-size: 0.5rem;
+  font-weight: 200;
 }
 
 .fill-available-height {
