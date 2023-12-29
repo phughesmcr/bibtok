@@ -218,3 +218,10 @@ export function createPartialAnchor(href: string | URL, fp: string | URL): HTMLA
   anchor.setAttribute("f-partial", fp.toString());
   return anchor;
 }
+
+export function setParamWithoutReload(key: string, value: string) {
+  const url = new URL(globalThis.location.toString());
+  url.searchParams.set(key, value);
+  window.history.pushState(null, "", url.toString());
+  return url;
+}

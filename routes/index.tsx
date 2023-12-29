@@ -6,6 +6,7 @@ import AppContainer from "../components/AppContainer.tsx";
 import NavBar from "../components/NavBar.tsx";
 import Carousel from "../islands/Carousel.tsx";
 import Onboarding from "../islands/Onboarding.tsx";
+import Toolbar from "../islands/Toolbar.tsx";
 
 export const handler: Handlers<ApiResponse> = {
   async GET(req, ctx) {
@@ -27,7 +28,8 @@ export const handler: Handlers<ApiResponse> = {
 export default function Home(props: PageProps<ApiResponse>) {
   const { data } = props;
 
-  const nextUrl = setApiParamsInUrl(new URL(props.url), data);
+  const currentUrl = new URL(props.url);
+  const nextUrl = setApiParamsInUrl(currentUrl, data);
   const fp = new URL(nextUrl);
   fp.pathname = "/partials/feed";
 
@@ -36,7 +38,7 @@ export default function Home(props: PageProps<ApiResponse>) {
       <Onboarding />
       <AppContainer>
         <main role="main" className="min-w-0 min-h-0 w-full h-full">
-          {/* <Toolbar url={nextUrl} /> */}
+          <Toolbar url={currentUrl} />
           <Partial name="carousel">
             <Carousel res={data} next={nextUrl} fp={fp} />
           </Partial>
