@@ -14,6 +14,7 @@ export default function Carousel(props: CarouselProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollToTop = useCallback(() => {
     containerRef.current?.scrollTo({ top: 0 });
+    containerRef.current?.focus();
   }, [containerRef.current]);
 
   return (
@@ -38,7 +39,7 @@ export default function Carousel(props: CarouselProps) {
           aria-posinset={(pageSize ?? verses.length) + 1}
           aria-setsize={((pageSize ?? -1) + 1) || -1} // pageSize or -1
           key={crypto.randomUUID()}
-          class="w-full h-full snap-start snap-always"
+          class="w-full h-full snap-start snap-always mb-4"
         >
           <a
             href={next.toString()}

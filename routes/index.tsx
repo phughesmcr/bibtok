@@ -3,8 +3,9 @@ import type { Handlers, PageProps } from "$fresh/server.ts";
 import { getPageOfVerses } from "@db";
 import { getApiParamsFromUrl, getIdFromKvEntry, setApiParamsInUrl } from "@lib/utils.ts";
 import AppContainer from "../components/AppContainer.tsx";
-import Carousel from "../islands/Carousel.tsx";
 import NavBar from "../components/NavBar.tsx";
+import Onboarding from "../components/Onboarding.tsx";
+import Carousel from "../islands/Carousel.tsx";
 
 export const handler: Handlers<ApiResponse> = {
   async GET(req, ctx) {
@@ -31,15 +32,18 @@ export default function Home(props: PageProps<ApiResponse>) {
   fp.pathname = "/partials/feed";
 
   return (
-    <AppContainer>
-      <main role="main" className="min-w-0 min-h-0 w-full h-full">
-        <Partial name="carousel">
-          <Carousel res={data} next={nextUrl} fp={fp} />
-        </Partial>
-      </main>
-      <nav role="navigation" className="min-w-0 min-h-0 w-full h-full">
-        <NavBar />
-      </nav>
-    </AppContainer>
+    <>
+      <Onboarding />
+      <AppContainer>
+        <main role="main" className="min-w-0 min-h-0 w-full h-full">
+          <Partial name="carousel">
+            <Carousel res={data} next={nextUrl} fp={fp} />
+          </Partial>
+        </main>
+        <div className="min-w-0 min-h-0 w-full h-full">
+          <NavBar />
+        </div>
+      </AppContainer>
+    </>
   );
 }

@@ -32,7 +32,13 @@ export default function Article(props: ArticleProps) {
   }
 
   return (
-    <article key={key} aria-posinset={posinset} aria-setsize={setsize} class="ui w-full h-full snap-start snap-always">
+    <article
+      key={key}
+      aria-posinset={posinset}
+      aria-setsize={setsize}
+      tabIndex={0}
+      class="ui w-full h-full snap-start snap-always"
+    >
       <div class="info w-full">
         <h1 aria-label="Book Title">{v === 1 ? bookInfo.title_full : bookInfo.title_short}</h1>
         <h2 aria-label="Book reference">Chapter {c} - Verse {v}</h2>

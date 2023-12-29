@@ -6,7 +6,8 @@ import NavButton from "./NavButton.tsx";
 
 export default function NavBar() {
   return (
-    <div
+    <nav
+      role={"navigation"}
       aria-orientation="horizontal"
       className="flex flex-row justify-around items-center p-1 gap-2 touch-none overflow-hidden h-full w-full max-w-full max-h-full bg-zinc-900 text-zinc-100"
     >
@@ -25,6 +26,6 @@ export default function NavBar() {
       <NavButton href="/catechism" text="Catechism">
         <IconZoomQuestion class="w-6 h-6" />
       </NavButton>
-    </div>
+    </nav>
   );
 }
