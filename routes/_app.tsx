@@ -42,7 +42,7 @@ export default function App({ Component }: PageProps) {
 
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
-        <meta property="og:title" content={APP_NAME} />
+        <meta property="og:title" content={`${APP_NAME} | ${APP_TAGLINE}`} />
         <meta property="og:description" content={META_DESCRIPTION} />
         <meta property="og:url" content={LINK_CANONICAL} />
         <meta property="og:image" content={asset(`${LINK_CANONICAL}/img/android-chrome-512x512.png`)} />
@@ -52,7 +52,7 @@ export default function App({ Component }: PageProps) {
         <meta property="og:image:height" content="512" />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={APP_NAME} />
+        <meta name="twitter:title" content={`${APP_NAME} | ${APP_TAGLINE}`} />
         <meta name="twitter:description" content={META_DESCRIPTION} />
         <meta name="twitter:image:src" content={asset(`${LINK_CANONICAL}/img/card.png`)} />
 
@@ -66,7 +66,7 @@ export default function App({ Component }: PageProps) {
 
         <link rel="stylesheet" href={asset("styles.css")} />
       </head>
-      <body class="no-interaction bg-zinc-950 text-zinc-100">
+      <body class="no-interaction relative overflow-hidden bg-zinc-950 text-zinc-100">
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <Component />
       </body>

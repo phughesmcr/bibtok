@@ -6,25 +6,24 @@ type AppContainerProps = {
 };
 
 export default function AppContainer(props: AppContainerProps) {
+  const { children } = props;
   return (
     <div
-      class="no-interaction w-[100dvw] h-[100dvh]"
-      role="application"
-      id={APP_NAME}
+      id="app-container"
+      class="no-interaction isolate block box-border antialiased w-dvw h-dvh max-w-vw max-h-vh"
       name={APP_NAME}
       aria-label={APP_NAME}
     >
       <div
-        role="none"
-        class="z-0 top-0 left-0 absolute overflow-hidden no-interaction w-full h-full"
+        id="outer-container"
+        class="no-interaction absolute top-0 left-0 overflow-hidden w-full h-full z-0"
       >
         <div
-          role="none"
-          id="container"
-          class="relative no-interaction w-full h-full"
+          id="inner-container"
+          class="no-interaction relative w-full h-full grid grid-cols-1"
           f-client-nav
         >
-          {props.children}
+          {children}
         </div>
       </div>
     </div>

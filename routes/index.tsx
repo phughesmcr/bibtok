@@ -4,7 +4,7 @@ import { getPageOfVerses } from "@db";
 import { getApiParamsFromUrl, getIdFromKvEntry, setApiParamsInUrl } from "@lib/utils.ts";
 import AppContainer from "../components/AppContainer.tsx";
 import Carousel from "../islands/Carousel.tsx";
-import NavBar from "../islands/NavBar.tsx";
+import NavBar from "../components/NavBar.tsx";
 
 export const handler: Handlers<ApiResponse> = {
   async GET(req, ctx) {

@@ -1,6 +1,6 @@
 import AppContainer from "../../components/AppContainer.tsx";
 import Catechism from "../../db/catechism.json" assert { type: "json" };
-import NavBar from "../../islands/NavBar.tsx";
+import NavBar from "../../components/NavBar.tsx";
 
 export default function CatechismHome() {
   return (
