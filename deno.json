@@ -38,6 +38,7 @@
     "tailwindcss": "npm:tailwindcss@3.4.0",
     "tailwindcss/": "npm:/tailwindcss@3.4.0/",
     "tailwindcss/plugin": "npm:/tailwindcss@3.4.0/plugin.js",
+    "@tailwindcss/forms": "npm:@tailwindcss/forms@0.5.7",
     "$std/": "https://deno.land/std@0.208.0/",
     "escape": "https://deno.land/x/escape@1.4.2/mod.ts",
     "icons/": "https://deno.land/x/tabler_icons_tsx@0.0.5/tsx/",

@@ -14,6 +14,7 @@ import * as $psalms_psalm_ from "./routes/psalms/[psalm].tsx";
 import * as $psalms_index from "./routes/psalms/index.tsx";
 import * as $Carousel from "./islands/Carousel.tsx";
 import * as $Onboarding from "./islands/Onboarding.tsx";
+import * as $Toolbar from "./islands/Toolbar.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -32,6 +33,7 @@ const manifest = {
   islands: {
     "./islands/Carousel.tsx": $Carousel,
     "./islands/Onboarding.tsx": $Onboarding,
+    "./islands/Toolbar.tsx": $Toolbar,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

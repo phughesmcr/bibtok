@@ -4,8 +4,8 @@ import { getPageOfVerses } from "@db";
 import { getApiParamsFromUrl, getIdFromKvEntry, setApiParamsInUrl } from "@lib/utils.ts";
 import AppContainer from "../components/AppContainer.tsx";
 import NavBar from "../components/NavBar.tsx";
-import Onboarding from "../islands/Onboarding.tsx";
 import Carousel from "../islands/Carousel.tsx";
+import Onboarding from "../islands/Onboarding.tsx";
 
 export const handler: Handlers<ApiResponse> = {
   async GET(req, ctx) {
@@ -36,6 +36,7 @@ export default function Home(props: PageProps<ApiResponse>) {
       <Onboarding />
       <AppContainer>
         <main role="main" className="min-w-0 min-h-0 w-full h-full">
+          {/* <Toolbar url={nextUrl} /> */}
           <Partial name="carousel">
             <Carousel res={data} next={nextUrl} fp={fp} />
           </Partial>
