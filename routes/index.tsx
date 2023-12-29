@@ -4,7 +4,7 @@ import { getPageOfVerses } from "@db";
 import { getApiParamsFromUrl, getIdFromKvEntry, setApiParamsInUrl } from "@lib/utils.ts";
 import AppContainer from "../components/AppContainer.tsx";
 import NavBar from "../components/NavBar.tsx";
-import Onboarding from "../components/Onboarding.tsx";
+import Onboarding from "../islands/Onboarding.tsx";
 import Carousel from "../islands/Carousel.tsx";
 
 export const handler: Handlers<ApiResponse> = {

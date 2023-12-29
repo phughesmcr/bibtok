@@ -9,4 +9,3 @@
 - Add a "lectionary" tab at the top (replacing "for you")
 - Add translation selector
 - Add custom font selector
-- Onboarding "scroll up" animation
