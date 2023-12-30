@@ -69,6 +69,7 @@ export function conformTranslation(params: URLSearchParams): Translation | null 
   switch (cleanedTranslation) {
     case "asv":
     case "bbe":
+    case "cut":
     case "kjv":
     case "web":
       return cleanedTranslation;

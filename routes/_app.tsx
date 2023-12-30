@@ -82,9 +82,6 @@ export default function App({ Component }: PageProps) {
         <link rel="preconnect" href="https://fonts.gstatic.com" />
 
         <link rel="stylesheet" href={asset("styles.css")} />
-
-        <script type="module">
-        </script>
       </head>
       <body class="no-interaction relative overflow-hidden bg-zinc-950 text-zinc-100">
         <noscript>You need to enable JavaScript to run this app.</noscript>

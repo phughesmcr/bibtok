@@ -3,6 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'BabelStone Flags';
+  src:  local('BabelStone Flags'),
+        local('BabelStoneFlags'),
+        url('fonts/BabelStoneFlags.ttf') format('truetype'),
+        url('fonts/BabelStoneFlags.woff2') format('woff2'),
+        url('fonts/BabelStoneFlags.woff')  format('woff');
+}
+
 :root {
   --navbar-height: 48px;
 }
@@ -154,4 +163,8 @@ article.ui.catechism small {
 }
 .animate-up {
   animation: moveUp 1s ease-in-out infinite;
+}
+
+.flag-icon {
+  font-family: 'BabelStone Flags';
 }

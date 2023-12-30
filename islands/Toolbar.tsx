@@ -23,7 +23,7 @@ export default function Toolbar(props: ToolbarProps) {
           title="Bible Translation"
           aria-label="Select a Bible translation"
           name="translation-select"
-          class="w-[7ch] p-2 rounded-full text-zinc-950"
+          class="w-[9ch] p-2 rounded-full text-zinc-950"
           onChange={(e) => {
             // change ?t= in url to new value and redirect
             const newUrl = new URL(location.href);
@@ -35,22 +35,38 @@ export default function Toolbar(props: ToolbarProps) {
             title="The American Standard Version"
             aria-label="The American Standard Version"
             selected={translation === "asv"}
+            value="asv"
           >
-            ASV
+            <span className="flag-icon">🇺🇸</span>
+            &nbsp;ASV
           </option>
           <option
             title="The Bible in Basic English"
             aria-label="The Bible in Basic English"
             selected={translation === "bbe"}
+            value="bbe"
           >
-            BBE
+            <span className="flag-icon">🇬🇧</span>
+            &nbsp;BBE
+          </option>
+          <option
+            title="Chinese Union Version (traditional)"
+            aria-label="Chinese Union Version (traditional)"
+            label="CUT"
+            selected={translation === "cut"}
+            value="cut"
+          >
+            <span className="flag-icon">🇨🇳</span>
+            &nbsp;Chinese Union (Traditional)
           </option>
           <option
             title="The King James Version"
             aria-label="The King James Version"
             selected={translation === "kjv"}
+            value="kjv"
           >
-            KJV
+            <span className="flag-icon">🇬🇧</span>
+            &nbsp;KJV
           </option>
         </select>
       </div>

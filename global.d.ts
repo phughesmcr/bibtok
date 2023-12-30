@@ -2,7 +2,7 @@ declare type Opaque<T, K> = T & { __TYPE__: K };
 
 declare type VerseRef = Opaque<number, "VerseRef">;
 
-declare type Translation = "asv" | "bbe" | "kjv" | "web";
+declare type Translation = "asv" | "bbe" | "cut" | "kjv" | "web";
 
 declare type Pericope = {
   sv: number;

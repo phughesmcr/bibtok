@@ -13,10 +13,16 @@ corresponding tables the `bible.db` database.
 It contains the following tables, where [id] is an integer in the format BBCCCVVV (see Scrollmapper):
 
 - translations
-  - ## asv
-  - ## bbe
-  - ## kjv
-  - ## web
+  - ## asv (American Standard Version)
+    - [id]
+  - ## cut (Chinese Union Version - Traditional)
+    - [id]
+  - ## bbe (Bible in Basic English)
+    - [id]
+  - ## kjv (King James Version)
+    - [id]
+  - ## web (World English Bible)
+     - [id]
 - books
   - BookInfo (see `db.ts`)
 - crossrefs
