@@ -182,16 +182,28 @@ export const getLowestIdFromKvList = <T>(entries: Deno.KvEntry<T>[]): number => 
   return getIdFromKvEntry(lowestEntry);
 };
 
+// Fresh Partials helpers
+
+export function createPartialAnchor(href: string | URL, fp: string | URL): HTMLAnchorElement {
+  const anchor = document.createElement("a");
+  anchor.href = href.toString();
+  anchor.setAttribute("f-partial", fp.toString());
+  return anchor;
+}
+
 // General helpers
 
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
 }
 
+// deno-lint-ignore no-explicit-any
 export function memoizeWithLimitedHistory<T extends (...args: any[]) => void>(fn: T, limit = 1) {
+  // deno-lint-ignore no-explicit-any
   const cache: Record<string, any> = {};
   const keys: string[] = [];
 
+  // deno-lint-ignore no-explicit-any
   return (...args: any[]) => {
     const key = JSON.stringify(args);
     if (key in cache) {
@@ -210,18 +222,24 @@ export function memoizeWithLimitedHistory<T extends (...args: any[]) => void>(fn
   };
 }
 
-// Fresh Partials helpers
-
-export function createPartialAnchor(href: string | URL, fp: string | URL): HTMLAnchorElement {
-  const anchor = document.createElement("a");
-  anchor.href = href.toString();
-  anchor.setAttribute("f-partial", fp.toString());
-  return anchor;
+export function setParamWithoutReload(key: string, value: string) {
+  const url = new URL(location.href);
+  url.searchParams.set(key, value);
+  history.pushState(null, "", url.toString());
+  return url;
 }
 
-export function setParamWithoutReload(key: string, value: string) {
-  const url = new URL(globalThis.location.toString());
-  url.searchParams.set(key, value);
-  window.history.pushState(null, "", url.toString());
-  return url;
+// deno-lint-ignore no-explicit-any
+export function debounce<T extends (...args: any[]) => void>(
+  fn: T,
+  delay: number,
+): (...args: Parameters<T>) => void {
+  let timer: number | undefined;
+  return (...args: Parameters<T>) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn(...args);
+      timer = undefined;
+    }, delay);
+  };
 }

@@ -1,7 +1,8 @@
 import { Partial } from "$fresh/runtime.ts";
 import type { Handlers, PageProps } from "$fresh/server.ts";
 import { getPageOfVerses } from "@db";
-import { getApiParamsFromUrl, getIdFromKvEntry, setApiParamsInUrl } from "@lib/utils.ts";
+import { getApiParamsFromUrl, getIdFromKvEntry, setApiParamsInUrl, setParamWithoutReload } from "@lib/utils.ts";
+import { useEffect } from "preact/hooks";
 import AppContainer from "../components/AppContainer.tsx";
 import NavBar from "../components/NavBar.tsx";
 import Carousel from "../islands/Carousel.tsx";
@@ -27,11 +28,17 @@ export const handler: Handlers<ApiResponse> = {
 
 export default function Home(props: PageProps<ApiResponse>) {
   const { data } = props;
+  const { verses, cursor, endAt, pageSize, startFrom, translation } = data;
 
   const currentUrl = new URL(props.url);
   const nextUrl = setApiParamsInUrl(currentUrl, data);
   const fp = new URL(nextUrl);
   fp.pathname = "/partials/feed";
+
+  useEffect(() => {
+    if (translation) setParamWithoutReload("t", translation);
+    if (pageSize) setParamWithoutReload("s", pageSize.toString());
+  }, [translation, pageSize]);
 
   return (
     <>
