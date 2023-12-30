@@ -7,7 +7,6 @@ export default function Onboarding() {
 
   const toggleOnboarded = useCallback(() => {
     onboarded.value = true;
-    localStorage.setItem("onboarded", "true");
     dialogRef.current?.remove();
   }, [onboarded]);
 
