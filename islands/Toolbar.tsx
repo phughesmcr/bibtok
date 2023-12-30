@@ -56,7 +56,7 @@ export default function Toolbar(props: ToolbarProps) {
             selected={translation === "cut"}
             value="cut"
           >
-            <span className="flag-icon">🇨🇳</span>
+            <span className="flag-icon">🇭🇰</span>
             &nbsp;Chinese Union (Traditional)
           </option>
           <option
