@@ -14,6 +14,7 @@ export default function Toolbar(props: ToolbarProps) {
   return (
     <div
       role="toolbar"
+      aria-label="Contents"
       aria-orientation="horizontal"
       className="z-40 fixed top-0 left-0 bg-transparent text-zinc-400 flex flex-row justify-between items-center w-full h-12 px-2 py-3 mt-2"
     >

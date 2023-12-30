@@ -1,10 +1,11 @@
 # TODO
 
-- Light theme
+## MVP
 - Search functionality
+- Save preferences to local storage and restore them on page load
+  - Add idx query param allowing for scrolling to specific verse (see setParamWithoutReload())
+- Accessibility audit
 - Show cross-references as horizontal scroll panes
 - JSON+LD
-- Accessibility audit
-- Add a "lectionary" tab at the top (replacing "for you")
-- Add custom font selector
-- Add idx query param allowing for scrolling to specific verse (see setParamWithoutReload())
+- Add a "lectionary" tab at the top
+- Light theme

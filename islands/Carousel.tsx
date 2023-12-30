@@ -23,7 +23,7 @@ export default function Carousel(props: CarouselProps) {
   const setParams = useCallback(
     debounce((idx: number) => {
       if (idx) setParamWithoutReload("idx", idx.toString());
-    }, 900),
+    }, 300),
     [],
   );
 

@@ -13,7 +13,7 @@ export const META_VIEWPORT = "width=device-width, initial-scale=1.0, viewport-fi
 export const META_KEYWORDS = "bible, jesus, tiktok, social media, faith, answers, easy, beginner, christ, christianity" as const;
 export const META_ROBOTS = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" as const;
 export const META_AUTHOR = "Peter Hughes - www.phugh.es" as const;
-export const META_THEME_COLOR = "#0284c7" as const;
+export const META_THEME_COLOR = "#09090b" as const;
 export const META_COLOR_SCHEME = "dark" as const;
 
 export const LINK_CANONICAL = "https://www.holyscroller.app" as const;
