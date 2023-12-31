@@ -7,9 +7,9 @@
   font-family: 'BabelStone Flags';
   src:  local('BabelStone Flags'),
         local('BabelStoneFlags'),
-        url('fonts/BabelStoneFlags.ttf') format('truetype'),
-        url('fonts/BabelStoneFlags.woff2') format('woff2'),
-        url('fonts/BabelStoneFlags.woff')  format('woff');
+        url('./fonts/BabelStoneFlags.ttf') format('truetype'),
+        url('./fonts/BabelStoneFlags.woff2') format('woff2'),
+        url('./fonts/BabelStoneFlags.woff')  format('woff');
 }
 
 :root {
