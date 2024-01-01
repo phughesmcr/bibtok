@@ -5,13 +5,11 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_v1_verses from "./routes/api/v1/verses.ts";
+import * as $bible_id_ from "./routes/bible/[id].tsx";
+import * as $bible_index from "./routes/bible/index.tsx";
 import * as $catechism_index from "./routes/catechism/index.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $partials_feed from "./routes/partials/feed.tsx";
-import * as $proverbs_proverb_ from "./routes/proverbs/[proverb].tsx";
-import * as $proverbs_index from "./routes/proverbs/index.tsx";
-import * as $psalms_psalm_ from "./routes/psalms/[psalm].tsx";
-import * as $psalms_index from "./routes/psalms/index.tsx";
 import * as $Carousel from "./islands/Carousel.tsx";
 import * as $Onboarding from "./islands/Onboarding.tsx";
 import * as $Toolbar from "./islands/Toolbar.tsx";
@@ -22,13 +20,11 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/api/v1/verses.ts": $api_v1_verses,
+    "./routes/bible/[id].tsx": $bible_id_,
+    "./routes/bible/index.tsx": $bible_index,
     "./routes/catechism/index.tsx": $catechism_index,
     "./routes/index.tsx": $index,
     "./routes/partials/feed.tsx": $partials_feed,
-    "./routes/proverbs/[proverb].tsx": $proverbs_proverb_,
-    "./routes/proverbs/index.tsx": $proverbs_index,
-    "./routes/psalms/[psalm].tsx": $psalms_psalm_,
-    "./routes/psalms/index.tsx": $psalms_index,
   },
   islands: {
     "./islands/Carousel.tsx": $Carousel,

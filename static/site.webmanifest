@@ -66,18 +66,42 @@
   "shortcuts": [
     {
       "name": "Psalms",
-      "url": "/psalms",
-      "description": "The Book of Psalms"
+      "url": "/bible/19001001",
+      "description": "The Book of Psalms",
+      "icons": [
+        {
+          "src": "img\/android-icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image\/png",
+          "density": "2.0"
+        }
+      ]
     },
     {
       "name": "Proverbs",
-      "url": "/proverbs",
-      "description": "The Book of Psalms"
+      "url": "/bible/20001001",
+      "description": "The Book of Psalms",
+      "icons": [
+        {
+          "src": "img\/android-icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image\/png",
+          "density": "2.0"
+        }
+      ]
     },
     {
       "name": "Catechism",
       "url": "/catechism",
-      "description": "The 1662 BCP Catechism"
+      "description": "The 1662 BCP Catechism",
+      "icons": [
+        {
+          "src": "img\/android-icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image\/png",
+          "density": "2.0"
+        }
+      ]
     }
   ],
   "edge_side_panel": {}

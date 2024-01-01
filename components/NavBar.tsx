@@ -12,20 +12,20 @@ export default function NavBar() {
       aria-orientation="horizontal"
       className="flex flex-row justify-around items-center p-1 gap-2 touch-none overflow-hidden h-full w-full max-w-full max-h-full bg-zinc-900 text-zinc-100"
     >
-      <NavButton href="/" text="Bible">
-        <IconBible class="w-6 h-6" />
+      <NavButton href="/bible" text="Bible">
+        <IconBible className="w-6 h-6" />
       </NavButton>
 
-      <NavButton href="/psalms" text="Psalms">
-        <IconMusicHeart class="w-6 h-6" />
+      <NavButton href="/bible/psalms" text="Psalms">
+        <IconMusicHeart className="w-6 h-6" />
       </NavButton>
 
-      <NavButton href="/proverbs" text="Proverbs">
-        <IconMessageChatbot class="w-6 h-6" />
+      <NavButton href="/bible/proverbs" text="Proverbs">
+        <IconMessageChatbot className="w-6 h-6" />
       </NavButton>
 
       <NavButton href="/catechism" text="Catechism">
-        <IconZoomQuestion class="w-6 h-6" />
+        <IconZoomQuestion className="w-6 h-6" />
       </NavButton>
     </nav>
   );

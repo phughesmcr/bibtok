@@ -1,12 +1,5 @@
-import { refFromId } from "@lib/utils.ts";
-import BOOK_INFO from "./book_info.json" assert { type: "json" };
 import BOOK_TITLES from "./book_titles.json" assert { type: "json" };
 import PERICOPES from "./pericopes.json" assert { type: "json" };
-
-export function getBookInfoFromId(id: number): BookInfo | undefined {
-  const [book] = refFromId(id);
-  return BOOK_INFO.find(({ order }) => order === book);
-}
 
 export function getBookIdFromTitle(title: string): number | undefined {
   const norm = title.replace(/\s+/g, "");

@@ -1,18 +1,20 @@
 import { Head } from "$fresh/runtime.ts";
+import { APP_NAME } from "@lib/constants.ts";
 
-export default function Error404() {
+export default function Error404(props?: { message?: string }) {
+  const { message = "The page or data you were looking for doesn't exist." } = props || {};
   return (
     <>
       <Head>
-        <title>Oops!</title>
+        <title>{APP_NAME} | Oops!</title>
       </Head>
-      <div class="px-4 py-8 mx-auto bg-zinc-950 text-zinc-100">
-        <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
-          <h1 class="text-4xl font-bold">Oops! Something went wrong.</h1>
-          <p class="my-4">
-            The page or data you were looking for doesn't exist.
+      <div className="px-4 py-8 mx-auto bg-zinc-950 text-zinc-100">
+        <div className="max-w-screen-md mx-auto flex flex-col items-center justify-center">
+          <h1 className="text-4xl font-bold">Something went wrong.</h1>
+          <p className="my-4">
+            {message}
           </p>
-          <a href="/" class="underline font-bold">Go back home</a>
+          <a href="/" className="underline font-bold">Go back home</a>
         </div>
       </div>
     </>

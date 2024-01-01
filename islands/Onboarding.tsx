@@ -15,11 +15,12 @@ export default function Onboarding() {
       tabIndex={0}
       ref={dialogRef}
       hidden={onboarded.value}
+      aria-hidden={onboarded.value}
       role="dialog"
       aria-label="Scroll up to get started!"
       aria-orientation="vertical"
       style={`display: ${onboarded.value ? "none" : "flex"};`}
-      class="pointer-events-auto z-50 absolute top-0 left-0 flex-col items-center justify-center w-full h-full bg-zinc-100 text-zinc-700 opacity-70 touch-manipulation"
+      className="pointer-events-auto z-50 isolate absolute top-0 left-0 flex-col items-center justify-center w-full h-full bg-zinc-100 text-zinc-700 opacity-70 touch-manipulation"
       onTouchStart={toggleOnboarded}
       onPointerDown={toggleOnboarded}
       onMouseDown={toggleOnboarded}
@@ -27,14 +28,14 @@ export default function Onboarding() {
       <button
         type="button"
         aria-label="close dialog"
-        class="absolute top-0 right-0 text-3xl m-4"
+        className="absolute top-0 right-0 text-3xl m-4"
         tabIndex={0}
         onClick={toggleOnboarded}
       >
         &times;
       </button>
-      <IconArrowBigUpLinesFilled class="w-28 h-28 animate-up" />
-      <p class="font-bold text-5xl">Scroll Up</p>
+      <IconArrowBigUpLinesFilled className="w-28 h-28 animate-up" />
+      <p className="font-bold text-5xl">Scroll Up</p>
     </div>
   );
 }

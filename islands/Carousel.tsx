@@ -1,35 +1,37 @@
-import { debounce, setParamWithoutReload } from "@lib/utils.ts";
+import { debounce, refFromId, setParamWithoutReload } from "@lib/utils.ts";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import Article from "../components/Article.tsx";
 
 type CarouselProps = {
   res: ApiResponse;
-  next?: URL;
-  fp?: URL;
+  extras?: VerseExtras;
+  next?: VerseNextPageParams;
 };
 
 export default function Carousel(props: CarouselProps) {
-  const { res, next, fp } = props;
-  const { verses, cursor, endAt, pageSize, startFrom, translation } = res;
+  const { res, extras, next } = props;
+  const { verses, pageSize, translation } = res;
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const [idxInView, setIdxInView] = useState<number>(0);
+
   const scrollToTop = useCallback(() => {
     containerRef.current?.scrollTo({ top: 0 });
     containerRef.current?.focus();
   }, [containerRef.current]);
 
-  const [idx, setIdx] = useState<number>(0);
-
   const setParams = useCallback(
     debounce((idx: number) => {
       if (idx) setParamWithoutReload("idx", idx.toString());
-    }, 300),
+    }, 250),
     [],
   );
 
   useEffect(() => {
-    if (idx) setParams(idx);
-  }, [idx, setParams]);
+    if (idxInView) setParams(idxInView);
+  }, [idxInView, setParams]);
+
+  // START: SCROLLING OBSERVER
 
   const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -37,9 +39,10 @@ export default function Carousel(props: CarouselProps) {
     requestAnimationFrame(debounce(() => {
       if (entry.isIntersecting) {
         const pos = entry.target?.getAttribute("aria-posinset");
-        if (pos) setIdx(parseInt(pos));
+        if (pos) setIdxInView(parseInt(pos));
+        // TODO: trigger load next here
       }
-    }, 300));
+    }, 250));
   }, []);
 
   useEffect(() => {
@@ -58,12 +61,14 @@ export default function Carousel(props: CarouselProps) {
     };
   }, [handleScrollIntoView]);
 
+  // END: SCROLLING OBSERVER
+
   return (
     <div
       ref={containerRef}
       role="feed"
       aria-busy="false"
-      class="w-full h-full overflow-x-hidden overflow-y-auto hide-scrollbars touch-pan-y snap-y snap-mandatory p-2"
+      className="w-full h-full overflow-x-hidden overflow-y-auto hide-scrollbars touch-pan-y snap-y snap-mandatory p-2"
     >
       {verses?.map((verse, index) => (
         <Article
@@ -73,23 +78,24 @@ export default function Carousel(props: CarouselProps) {
           verse={verse}
           posinset={index + 1}
           setsize={((pageSize ?? -1) + 1) || -1} // (pageSize + 1) or -1
+          bookInfo={extras?.books[refFromId(verse[0])[0]]}
         />
       ))}
-      {next && fp && (
+      {next && (
         <article
           aria-posinset={(pageSize ?? verses.length) + 1}
           aria-setsize={((pageSize ?? -1) + 1) || -1} // pageSize or -1
           key={crypto.randomUUID()}
-          class="w-full h-full snap-start snap-always mb-4"
+          className="w-full h-full snap-start snap-always mb-4"
         >
           <a
-            href={next.toString()}
-            f-partial={fp.toString()}
-            class="w-full h-full flex items-center justify-center"
+            href={next.url.toString()}
+            f-partial={next.fp.toString()}
+            className="w-full h-full flex items-center justify-center"
             onClick={scrollToTop}
             aria-label="Load more"
           >
-            <span class="text-2xl underline">Load more</span>
+            <span className="text-2xl underline">Load more</span>
           </a>
         </article>
       )}

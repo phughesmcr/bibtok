@@ -26,15 +26,33 @@ declare type CrossRef = [sv: number, ev: number, r: number];
 
 declare type Verse = [id: number, text: string];
 
+declare type BibleKvData = {
+  books: BookInfo[];
+  crossrefs: CrossRef[];
+  translations: Record<Translation, Record<VerseRef, string>>;
+};
+
 declare type ApiParams = {
-  translation?: Translation;
+  translation: Translation;
   startFrom?: number;
   endAt?: number;
-  pageSize?: number;
+  pageSize: number;
   cursor?: string;
+};
+
+declare type VerseExtras = {
+  books: Record<number, BookInfo>;
+  crossRefs: Record<number, CrossRef[]>;
+};
+
+declare type VerseNextPageParams = {
+  cursor: string;
+  url: URL;
+  fp: URL;
 };
 
 declare type ApiResponse = ApiParams & {
   verses: Verse[];
-  error?: number;
+  extras?: VerseExtras;
+  next?: VerseNextPageParams;
 };

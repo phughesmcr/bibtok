@@ -9,11 +9,14 @@ export default function CatechismHome(props: PageProps<ApiResponse>) {
   const currentUrl = new URL(props.url);
   return (
     <AppContainer>
-      <main role="main" class="min-w-0 min-h-0 w-full h-full">
+      <main role="main" className="min-w-0 min-h-0 w-full h-full">
         <Toolbar url={currentUrl} />
         <Partial name="carousel">
-          <div role="feed" class="w-full h-full overflow-y-auto hide-scrollbars touch-pan-y snap-y snap-mandatory p-2">
-            <article key={0} class="ui catechism w-full h-full snap-start snap-always">
+          <div
+            role="feed"
+            className="w-full h-full overflow-y-auto hide-scrollbars touch-pan-y snap-y snap-mandatory p-2"
+          >
+            <article key={0} className="ui catechism w-full h-full snap-start snap-always">
               <h1>A Catechism</h1>
               <p>
                 From the 1662 Book of Common Prayer. <br />
@@ -26,7 +29,7 @@ export default function CatechismHome(props: PageProps<ApiResponse>) {
             </article>
             {Catechism.map((c, index) => {
               return (
-                <article key={index} class="ui catechism w-full h-full snap-start snap-always">
+                <article key={index} className="ui catechism w-full h-full snap-start snap-always">
                   <h1>{c[0]}</h1>
                   <p>{c[1]}</p>
                 </article>

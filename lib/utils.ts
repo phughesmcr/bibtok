@@ -116,11 +116,11 @@ export function conformCursor(params: URLSearchParams): string | undefined | nul
 
 export function getApiParamsFromUrl(url: string | URL): ApiParams {
   const { searchParams } = new URL(url);
-  const translation = conformTranslation(searchParams) ?? API_DEFAULT_TRANSLATION;
-  const pageSize = conformPageSize(searchParams) ?? API_DEFAULT_PAGE_SIZE;
-  const startFrom = conformStartFrom(searchParams) ?? undefined;
-  const endAt = conformEndAt(searchParams) ?? undefined;
-  const cursor = conformCursor(searchParams) ?? undefined;
+  const translation = conformTranslation(searchParams) || API_DEFAULT_TRANSLATION;
+  const pageSize = conformPageSize(searchParams) || API_DEFAULT_PAGE_SIZE;
+  const startFrom = conformStartFrom(searchParams) || undefined;
+  const endAt = conformEndAt(searchParams) || undefined;
+  const cursor = conformCursor(searchParams) || undefined;
   return { translation, startFrom, endAt, cursor, pageSize };
 }
 
@@ -243,4 +243,15 @@ export function debounce<T extends (...args: any[]) => void>(
       timer = undefined;
     }, delay);
   };
+}
+
+export function cleanId(id: number): number {
+  return parseInt(escapeSql(id.toString()), 10);
+}
+
+export function createPartialFeedUrls(currentUrl: URL, data: ApiParams): { url: URL; fp: URL } {
+  const url = setApiParamsInUrl(currentUrl, data);
+  const fp = new URL(url);
+  fp.pathname = "/partials/feed";
+  return { url, fp };
 }

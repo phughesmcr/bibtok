@@ -18,12 +18,12 @@ export default function Toolbar(props: ToolbarProps) {
       aria-orientation="horizontal"
       className="z-40 fixed top-0 left-0 bg-transparent text-zinc-400 flex flex-row justify-between items-center w-full h-12 px-2 py-3 mt-2"
     >
-      <div class="grow">
+      <div className="grow">
         <select
           title="Bible Translation"
           aria-label="Select a Bible translation"
           name="translation-select"
-          class="w-[9ch] p-2 rounded-full text-zinc-950"
+          className="w-[9ch] p-2 rounded-full text-zinc-950"
           onChange={(e) => {
             // change ?t= in url to new value and redirect
             const newUrl = new URL(location.href);
@@ -72,9 +72,9 @@ export default function Toolbar(props: ToolbarProps) {
       </div>
 
       {
-        /* <div class="grow">
+        /* <div className="grow">
         <button type="button">
-          <IconSearch class="w-6 h-6" />
+          <IconSearch className="w-6 h-6" />
         </button>
       </div>
         */
