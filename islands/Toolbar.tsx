@@ -6,11 +6,7 @@ type ToolbarProps = {
 
 export default function Toolbar(props: ToolbarProps) {
   const { url } = props;
-
-  const { cursor, endAt, pageSize, startFrom, translation } = getApiParamsFromUrl(url);
-
-  // trigger redirect if select is changed
-
+  const { translation } = getApiParamsFromUrl(url);
   return (
     <div
       role="toolbar"
@@ -56,7 +52,7 @@ export default function Toolbar(props: ToolbarProps) {
             selected={translation === "cut"}
             value="cut"
           >
-            <span className="flag-icon">🇭🇰</span>
+            <span className="flag-icon">🇨🇳</span>
             &nbsp;Chinese Union (Traditional)
           </option>
           <option

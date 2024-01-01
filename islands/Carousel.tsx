@@ -23,7 +23,7 @@ export default function Carousel(props: CarouselProps) {
   const setParams = useCallback(
     debounce((idx: number) => {
       if (idx) setParamWithoutReload("idx", idx.toString());
-    }, 250),
+    }, 100),
     [],
   );
 
@@ -36,13 +36,14 @@ export default function Carousel(props: CarouselProps) {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const handleScrollIntoView = useCallback((entry: IntersectionObserverEntry) => {
-    requestAnimationFrame(debounce(() => {
+    const debounced = debounce(() => {
       if (entry.isIntersecting) {
         const pos = entry.target?.getAttribute("aria-posinset");
         if (pos) setIdxInView(parseInt(pos));
         // TODO: trigger load next here
       }
-    }, 250));
+    }, 400);
+    debounced();
   }, []);
 
   useEffect(() => {

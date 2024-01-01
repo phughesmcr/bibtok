@@ -251,6 +251,7 @@ export function cleanId(id: number): number {
 
 export function createPartialFeedUrls(currentUrl: URL, data: ApiParams): { url: URL; fp: URL } {
   const url = setApiParamsInUrl(currentUrl, data);
+  url.pathname = "/bible";
   const fp = new URL(url);
   fp.pathname = "/partials/feed";
   return { url, fp };
