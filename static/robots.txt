@@ -3,7 +3,7 @@
 Sitemap: https://www.holyscroller.app/sitemap.xml
 
 User-agent: *
+Disallow: /api/
 Disallow: /fonts/
 Disallow: /img/
-Disallow: /api/
 Disallow: /partials/

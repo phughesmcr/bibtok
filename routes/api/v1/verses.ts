@@ -2,6 +2,8 @@ import { Handlers } from "$fresh/server.ts";
 import { getPageOfVerses } from "@db";
 import { getApiParamsFromUrl, getIdFromKvEntry } from "@lib/utils.ts";
 
+// TODO: update this to include `next` and `extras`
+
 export const handler: Handlers<ApiResponse | null> = {
   async GET(req, _ctx) {
     try {

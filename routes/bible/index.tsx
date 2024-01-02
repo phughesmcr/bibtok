@@ -4,6 +4,7 @@ import AppContainer from "@components/AppContainer.tsx";
 import NavBar from "@components/NavBar.tsx";
 import { getExtrasForVerses, getPageOfVerses } from "@db";
 import Carousel from "@islands/Carousel.tsx";
+import Onboarding from "@islands/Onboarding.tsx";
 import Toolbar from "@islands/Toolbar.tsx";
 import { createPartialFeedUrls, getApiParamsFromUrl, getIdFromKvEntry } from "@lib/utils.ts";
 
@@ -35,16 +36,19 @@ export default function Bible(props: PageProps<ApiResponse>) {
   const { extras, next } = data;
 
   return (
-    <AppContainer>
-      <main role="main" className="min-w-0 min-h-0 w-full h-full">
-        <Toolbar url={props.url} />
-        <Partial name="carousel">
-          <Carousel res={data} next={next} extras={extras} />
-        </Partial>
-      </main>
-      <nav role="navigation" className="min-w-0 min-h-0 w-full h-full">
-        <NavBar />
-      </nav>
-    </AppContainer>
+    <>
+      <Onboarding />
+      <AppContainer>
+        <main role="main" className="min-w-0 min-h-0 w-full h-full">
+          <Toolbar url={props.url} />
+          <Partial name="carousel">
+            <Carousel res={data} next={next} extras={extras} />
+          </Partial>
+        </main>
+        <div className="min-w-0 min-h-0 w-full h-full">
+          <NavBar />
+        </div>
+      </AppContainer>
+    </>
   );
 }

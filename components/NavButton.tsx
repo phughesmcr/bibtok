@@ -9,7 +9,7 @@ type NavButtonProps = {
 export default function NavButton(props: NavButtonProps) {
   const { children, href, text } = props;
   return (
-    <a href={href} className="flex flex-col grow flex-nowrap items-center justify-center overflow-hidden">
+    <a href={href} className="flex flex-col flex-1 flex-nowrap items-center justify-center overflow-hidden">
       <div>
         {children}
       </div>

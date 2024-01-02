@@ -10,22 +10,29 @@ export default function NavBar() {
       role={"navigation"}
       aria-label=""
       aria-orientation="horizontal"
-      className="flex flex-row justify-around items-center p-1 gap-2 touch-none overflow-hidden h-full w-full max-w-full max-h-full bg-zinc-900 text-zinc-100"
+      className="flex flex-row justify-around items-center p-1 gap-1 touch-none overflow-hidden h-full w-full max-w-full max-h-full bg-zinc-900 text-zinc-100"
     >
+      {/* TODO: Active styling */}
       <NavButton href="/bible" text="Bible">
-        <IconBible className="w-6 h-6" />
+        <IconBible className="w-5 h-5" />
       </NavButton>
 
       <NavButton href="/bible/psalms" text="Psalms">
-        <IconMusicHeart className="w-6 h-6" />
+        <IconMusicHeart className="w-5 h-5" />
       </NavButton>
 
+      {
+        /* <NavButton href="/lectionary" text="Daily">
+        <IconCalendarExclamation className="w-5 h-5" />
+      </NavButton> */
+      }
+
       <NavButton href="/bible/proverbs" text="Proverbs">
-        <IconMessageChatbot className="w-6 h-6" />
+        <IconMessageChatbot className="w-5 h-5" />
       </NavButton>
 
       <NavButton href="/catechism" text="Catechism">
-        <IconZoomQuestion className="w-6 h-6" />
+        <IconZoomQuestion className="w-5 h-5" />
       </NavButton>
     </nav>
   );

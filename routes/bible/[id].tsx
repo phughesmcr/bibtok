@@ -9,22 +9,24 @@ export const handler: Handlers = {
       const { id } = ctx.params;
       const cleanId = escapeSql(id);
 
+      console.log(id, cleanId);
+
+      const res = new URL(req.url);
+      res.pathname = "/bible";
+
       // check if id is a book name...
       const bookId = getBookIdFromTitle(cleanId);
       if (bookId && !isNaN(bookId) && bookId >= API_MIN_BOOK_ID && bookId <= API_MAX_BOOK_ID) {
-        const res = new URL(req.url);
-        res.pathname = "/bible";
         res.searchParams.set("sv", `${bookId}001001`);
         res.searchParams.set("ev", `${bookId}999999`);
         return Response.redirect(res.toString(), 302);
       }
+
       // ... or a verse id
       const idInt = parseInt(cleanId, 10);
       if (!idInt || isNaN(idInt) || idInt < API_MIN_ID || idInt > API_MAX_ID) {
         return ctx.renderNotFound({ message: `Verse "${cleanId}" not found. Try again.` });
       }
-      const res = new URL(req.url);
-      res.pathname = "/bible";
       res.searchParams.set("sv", cleanId);
       res.searchParams.delete("ev");
       return Response.redirect(res.toString(), 302);

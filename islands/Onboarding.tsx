@@ -7,6 +7,7 @@ export default function Onboarding() {
 
   const toggleOnboarded = useCallback(() => {
     onboarded.value = true;
+    localStorage?.setItem("onboarded", "true");
     dialogRef.current?.remove();
   }, [onboarded]);
 
@@ -14,12 +15,12 @@ export default function Onboarding() {
     <div
       tabIndex={0}
       ref={dialogRef}
-      hidden={onboarded.value}
-      aria-hidden={onboarded.value}
+      hidden={onboarded}
+      aria-hidden={onboarded}
       role="dialog"
       aria-label="Scroll up to get started!"
       aria-orientation="vertical"
-      style={`display: ${onboarded.value ? "none" : "flex"};`}
+      style={`display: ${onboarded.peek() ? "none" : "flex"};`}
       className="pointer-events-auto z-50 isolate absolute top-0 left-0 flex-col items-center justify-center w-full h-full bg-zinc-100 text-zinc-700 opacity-70 touch-manipulation"
       onTouchStart={toggleOnboarded}
       onPointerDown={toggleOnboarded}

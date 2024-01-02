@@ -2,6 +2,7 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
+import * as $_id_ from "./routes/[id].tsx";
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_v1_verses from "./routes/api/v1/verses.ts";
@@ -9,14 +10,17 @@ import * as $bible_id_ from "./routes/bible/[id].tsx";
 import * as $bible_index from "./routes/bible/index.tsx";
 import * as $catechism_index from "./routes/catechism/index.tsx";
 import * as $index from "./routes/index.tsx";
+import * as $lectionary_index from "./routes/lectionary/index.tsx";
 import * as $partials_feed from "./routes/partials/feed.tsx";
 import * as $Carousel from "./islands/Carousel.tsx";
 import * as $Onboarding from "./islands/Onboarding.tsx";
 import * as $Toolbar from "./islands/Toolbar.tsx";
+import * as $Topbar from "./islands/Topbar.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
+    "./routes/[id].tsx": $_id_,
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/api/v1/verses.ts": $api_v1_verses,
@@ -24,12 +28,14 @@ const manifest = {
     "./routes/bible/index.tsx": $bible_index,
     "./routes/catechism/index.tsx": $catechism_index,
     "./routes/index.tsx": $index,
+    "./routes/lectionary/index.tsx": $lectionary_index,
     "./routes/partials/feed.tsx": $partials_feed,
   },
   islands: {
     "./islands/Carousel.tsx": $Carousel,
     "./islands/Onboarding.tsx": $Onboarding,
     "./islands/Toolbar.tsx": $Toolbar,
+    "./islands/Topbar.tsx": $Topbar,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;
