@@ -1,10 +1,12 @@
 /// <reference lib="deno.unstable" />
 
+import { API_DEFAULT_PAGE_SIZE, API_DEFAULT_TRANSLATION, DB_LOCAL_PATH, KvPath } from "@lib/constants.ts";
 import type { ApiParams, BookInfo, CrossRef, Translation, Verse, VerseExtras } from "@lib/types.ts";
 import { cleanId } from "@lib/utils.ts";
 import { escapeSql } from "escape";
 
-const db = await Deno.openKv();
+const isDenoDeploy = Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined;
+const db = await Deno.openKv(isDenoDeploy ? undefined : DB_LOCAL_PATH);
 
 globalThis.addEventListener("unload", () => db?.close(), { passive: true });
 globalThis.addEventListener("unhandledrejection", () => db?.close(), { passive: true });
