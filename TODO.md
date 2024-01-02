@@ -1,7 +1,6 @@
 # TODO
 
 ## MVP
-- Search functionality
 - Save preferences to local storage and restore them on page load
   - Add idx query param allowing for scrolling to specific verse (see setParamWithoutReload())
 - Accessibility audit

@@ -1,5 +1,18 @@
+import BOOK_INFO from "./book_info.json" assert { type: "json" };
 import BOOK_TITLES from "./book_titles.json" assert { type: "json" };
 import PERICOPES from "./pericopes.json" assert { type: "json" };
+
+export const getBookInfoById = (id: number) => {
+  return BOOK_INFO.find((info) => info.order === id);
+};
+
+export const listOfBooks: [api: string, short: string][] = BOOK_INFO.map(({ title_short }) => {
+  return [title_short.replaceAll(/[^a-zA-Z0-9]/g, ""), title_short];
+});
+
+export const getMaxChapterNo = (id: number): number | undefined => {
+  return getBookInfoById(id)?.chapters;
+};
 
 export function getBookIdFromTitle(title: string): number | undefined {
   const norm = title.replace(/\s+/g, "");
