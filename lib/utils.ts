@@ -8,6 +8,7 @@ import {
   NOOP_CURSOR,
 } from "./constants.ts";
 
+import type { ApiParams, Translation, VerseRef } from "@lib/types.ts";
 import { escapeSql } from "escape";
 
 // VerseRef helpers

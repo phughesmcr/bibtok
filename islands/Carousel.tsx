@@ -1,3 +1,4 @@
+import type { ApiResponse, VerseExtras, VerseNextPageParams } from "@lib/types.ts";
 import { debounce, refFromId, setParamWithoutReload } from "@lib/utils.ts";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import Article from "../components/Article.tsx";

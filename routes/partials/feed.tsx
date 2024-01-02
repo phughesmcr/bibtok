@@ -1,6 +1,7 @@
 import { Partial } from "$fresh/runtime.ts";
 import { defineRoute, type RouteConfig } from "$fresh/server.ts";
 import { getExtrasForVerses, getPageOfVerses } from "@db";
+import type { Verse } from "@lib/types.ts";
 import { createPartialFeedUrls, getApiParamsFromUrl, getIdFromKvEntry } from "@lib/utils.ts";
 import Carousel from "../../islands/Carousel.tsx";
 

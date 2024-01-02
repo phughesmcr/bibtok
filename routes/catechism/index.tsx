@@ -1,6 +1,7 @@
 import { Partial } from "$fresh/runtime.ts";
 import { PageProps } from "$fresh/server.ts";
 import Onboarding from "@islands/Onboarding.tsx";
+import type { ApiResponse } from "@lib/types.ts";
 import AppContainer from "../../components/AppContainer.tsx";
 import NavBar from "../../components/NavBar.tsx";
 import Catechism from "../../db/catechism.json" assert { type: "json" };

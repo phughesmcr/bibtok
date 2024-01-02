@@ -1,4 +1,5 @@
 import { getPericope } from "@data";
+import type { BookInfo, Verse } from "@lib/types.ts";
 import { refFromId } from "@lib/utils.ts";
 
 type ArticleProps = {

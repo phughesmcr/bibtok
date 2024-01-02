@@ -1,5 +1,7 @@
 //deno-fmt-ignore-file
 
+import type { Translation } from "@lib/types.ts";
+
 export const APP_NAME = "HolyScroller" as const;
 export const APP_VERSION = "0.0.1" as const;
 export const APP_TAGLINE = "Scroll the scriptures!" as const;

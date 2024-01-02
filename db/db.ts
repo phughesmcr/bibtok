@@ -1,6 +1,6 @@
 /// <reference lib="deno.unstable" />
 
-import { API_DEFAULT_PAGE_SIZE, API_DEFAULT_TRANSLATION, KvPath } from "@lib/constants.ts";
+import type { ApiParams, BookInfo, CrossRef, Translation, Verse, VerseExtras } from "@lib/types.ts";
 import { cleanId } from "@lib/utils.ts";
 import { escapeSql } from "escape";
 

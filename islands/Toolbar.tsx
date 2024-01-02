@@ -1,4 +1,5 @@
 import { getBookIdFromTitle, listOfBooks } from "@data";
+import type { Translation } from "@lib/types.ts";
 import { getApiParamsFromUrl } from "@lib/utils.ts";
 import { useSignal } from "@preact/signals";
 import IconSearch from "icons/search.tsx";

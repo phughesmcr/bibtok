@@ -6,6 +6,7 @@ import { getExtrasForVerses, getPageOfVerses } from "@db";
 import Carousel from "@islands/Carousel.tsx";
 import Onboarding from "@islands/Onboarding.tsx";
 import Toolbar from "@islands/Toolbar.tsx";
+import type { ApiResponse, Verse } from "@lib/types.ts";
 import { createPartialFeedUrls, getApiParamsFromUrl, getIdFromKvEntry } from "@lib/utils.ts";
 
 export const handler: Handlers<ApiResponse> = {

@@ -1,3 +1,4 @@
+import type { Pericope } from "@lib/types.ts";
 import BOOK_INFO from "./book_info.json" assert { type: "json" };
 import BOOK_TITLES from "./book_titles.json" assert { type: "json" };
 import PERICOPES from "./pericopes.json" assert { type: "json" };

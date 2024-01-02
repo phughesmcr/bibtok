@@ -1,15 +1,21 @@
 {
+  "exclude": [
+    ".git/**/*",
+    ".github/**/*",
+    ".vscode/**/*",
+    "**/_fresh/**/*",
+    "**/scratch/**/*",
+    "**/*.json",
+    "**/*.jsonc",
+    "**/*.md"
+  ],
   "lock": false,
   "fmt": {
-    "lineWidth": 120,
-    "exclude": [
-      "**/*.json",
-      "**/*.jsonc",
-      "**/*.md"
-    ]
+    "lineWidth": 120
   },
   "tasks": {
-    "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
+    "clean": "npx rimraf ./_fresh",
+    "check": "deno fmt --check && deno lint && deno check --unstable-kv dev.ts",
     "cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
     "manifest": "deno task cli manifest $(pwd)",
     "start": "deno run -A --unstable --watch=static/,routes/ dev.ts",
@@ -25,10 +31,6 @@
       ]
     }
   },
-  "exclude": [
-    "**/_fresh/*",
-    "**/scratch/*"
-  ],
   "imports": {
     "$fresh/": "https://deno.land/x/fresh@1.6.1/",
     "preact": "https://esm.sh/preact@10.19.2",
@@ -56,8 +58,12 @@
   "nodeModulesDir": true,
   "deploy": {
     "project": "7a27ec5c-40ee-4c1c-988b-63d476d01c6b",
-    "exclude": ["**/scratch/*", "**/db/**/*.db"],
+    "exclude": ["**/db/**/*.db"],
     "include": [],
     "entrypoint": "main.ts"
+  },
+  "githooks": {
+    "$schema": "https://deno.land/x/githooks/schema.json",
+    "pre-commit": "check"
   }
 }
