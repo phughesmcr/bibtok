@@ -224,11 +224,13 @@ export function memoizeWithLimitedHistory<T extends (...args: any[]) => void>(fn
   };
 }
 
-export function setParamWithoutReload(key: string, value: string) {
-  const url = new URL(location.href);
-  url.searchParams.set(key, value);
-  history.pushState(null, "", url.toString());
-  return url;
+export function setParamsWithoutReload(params: Record<string, string>, url: URL | string) {
+  const newUrl = new URL(url);
+  for (const [key, value] of Object.entries(params)) {
+    newUrl.searchParams.set(key, value);
+  }
+  window.history.pushState(null, "", newUrl.toString());
+  return newUrl;
 }
 
 // deno-lint-ignore no-explicit-any

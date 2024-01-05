@@ -102,19 +102,6 @@
           "density": "2.0"
         }
       ]
-    },
-    {
-      "name": "Daily Readings",
-      "url": "/lectionary",
-      "description": "The Revised Common Lectionary",
-      "icons": [
-        {
-          "src": "img\/android-icon-96x96.png",
-          "sizes": "96x96",
-          "type": "image\/png",
-          "density": "2.0"
-        }
-      ]
     }
   ],
   "edge_side_panel": {}

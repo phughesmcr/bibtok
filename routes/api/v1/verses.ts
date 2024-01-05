@@ -1,9 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
-import { getPageOfVerses } from "@db";
+import { getExtrasForVerses, getPageOfVerses } from "@db";
 import type { ApiResponse } from "@lib/types.ts";
 import { getApiParamsFromUrl, getIdFromKvEntry } from "@lib/utils.ts";
-
-// TODO: update this to include `next` and `extras`
 
 export const handler: Handlers<ApiResponse | null> = {
   async GET(req, _ctx) {
@@ -13,7 +11,7 @@ export const handler: Handlers<ApiResponse | null> = {
       const { cursor, pageSize, translation, startFrom, endAt } = params;
 
       // construct initial response
-      const res: ApiResponse = { ...params, verses: [] };
+      const res: ApiResponse = { ...params, verses: [], origin: req.url };
 
       // query the database
       const iter = getPageOfVerses({
@@ -31,6 +29,9 @@ export const handler: Handlers<ApiResponse | null> = {
 
       // update the cursor
       res.cursor = iter.cursor;
+
+      // add extras to the response
+      res.extras = await getExtrasForVerses(res.verses);
 
       // return the response as JSON
       return new Response(JSON.stringify(res), {

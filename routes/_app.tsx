@@ -1,11 +1,14 @@
 import { asset } from "$fresh/runtime.ts";
 import { type PageProps } from "$fresh/server.ts";
+import Loader from "@islands/Loader.tsx";
+import Onboarding from "@islands/Onboarding.tsx";
 import {
   APP_NAME,
   APP_TAGLINE,
   HTML_DIR,
   HTML_LANG,
   LINK_CANONICAL,
+  LS_KEY_ONBOARD,
   META_AUTHOR,
   META_CHARSET,
   META_COLOR_SCHEME,
@@ -15,8 +18,28 @@ import {
   META_THEME_COLOR,
   META_VIEWPORT,
 } from "@lib/constants.ts";
+import { $isLoading, $isOnboard } from "@lib/state.ts";
+import { effect } from "@preact/signals";
+import { useEffect } from "preact/hooks";
 
-export default function App({ Component }: PageProps) {
+export default function App({ Component, url }: PageProps) {
+  const handleLoading = () => {
+    $isLoading.value = false;
+  };
+
+  useEffect(() => {
+    const { window } = globalThis; // stops typescript complaining
+    window.addEventListener("load", handleLoading);
+    return () => window.removeEventListener("load", handleLoading);
+  }, []);
+
+  effect(() => {
+    if ($isOnboard.value === false) {
+      const storedOnboardState = localStorage?.getItem(LS_KEY_ONBOARD);
+      if (storedOnboardState) $isOnboard.value = !!JSON.parse(storedOnboardState);
+    }
+  });
+
   return (
     <html lang={HTML_LANG} dir={HTML_DIR}>
       <head>
@@ -85,6 +108,8 @@ export default function App({ Component }: PageProps) {
       </head>
       <body className="no-interaction relative overflow-hidden bg-zinc-950 text-zinc-100">
         <noscript>You need to enable JavaScript to run this app.</noscript>
+        <Loader />
+        <Onboarding />
         <Component />
         <script src={asset("/pwa-loader.js")} type="module" />
       </body>

@@ -3,17 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'BabelStone Flags';
-  src:  local('BabelStone Flags'),
-        local('BabelStoneFlags'),
-        url('./fonts/BabelStoneFlags.ttf') format('truetype'),
-        url('./fonts/BabelStoneFlags.woff2') format('woff2'),
-        url('./fonts/BabelStoneFlags.woff')  format('woff');
-}
-
 :root {
   --navbar-height: 48px;
+
+  --oxford-blue: #000B2Dff;
+  --ivory: #FEFEF3ff;
+  --lapis-lazuli: #126186ff;
+  --moonstone: #00BFD7ff;
+  --ivory-2: #FEFDF2ff;
+
+  --primary: var(--lapis-lazuli);
+  --secondary: var(--ivory);
 }
 html, body {
   width: 100%;
@@ -166,5 +166,10 @@ article.ui.catechism small {
 }
 
 .flag-icon {
-  font-family: 'BabelStone Flags';
+  font-family: monospace;
+}
+
+[aria-hidden="true"], hidden, .hidden {
+  display: none;
+  visibility: hidden;
 }

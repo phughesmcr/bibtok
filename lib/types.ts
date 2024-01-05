@@ -52,6 +52,7 @@ export type VerseNextPageParams = {
 };
 
 export type ApiResponse = ApiParams & {
+  origin: URL | string;
   verses: Verse[];
   extras?: VerseExtras;
   next?: VerseNextPageParams;

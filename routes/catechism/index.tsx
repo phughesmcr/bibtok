@@ -11,7 +11,6 @@ export default function CatechismHome(props: PageProps<ApiResponse>) {
   const currentUrl = new URL(props.url);
   return (
     <>
-      <Onboarding />
       <AppContainer>
         <main role="main" className="min-w-0 min-h-0 w-full h-full">
           <Toolbar url={currentUrl} />

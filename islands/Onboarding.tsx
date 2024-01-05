@@ -1,37 +1,48 @@
-import { onboarded } from "@lib/state.ts";
+import { LS_KEY_ONBOARD } from "@lib/constants.ts";
+import { $isOnboard } from "@lib/state.ts";
+import { effect } from "@preact/signals";
 import IconArrowBigUpLinesFilled from "icons/arrow-big-up-lines-filled.tsx";
 import { useCallback, useRef } from "preact/hooks";
 
 export default function Onboarding() {
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  const toggleOnboarded = useCallback(() => {
-    onboarded.value = true;
-    localStorage?.setItem("onboarded", "true");
-    dialogRef.current?.remove();
-  }, [onboarded]);
+  effect(() => {
+    if ($isOnboard.value) {
+      dialogRef.current?.remove();
+      dialogRef.current?.classList.add("hidden");
+      dialogRef.current?.classList.remove("flex");
+    } else {
+      dialogRef.current?.classList.add("flex");
+      dialogRef.current?.classList.remove("hidden");
+    }
+  });
+
+  const toggleIsOnboard = useCallback(() => {
+    $isOnboard.value = true;
+    localStorage?.setItem(LS_KEY_ONBOARD, "true");
+  }, []);
 
   return (
     <div
       tabIndex={0}
       ref={dialogRef}
-      hidden={onboarded}
-      aria-hidden={onboarded}
+      hidden={$isOnboard}
+      aria-hidden={$isOnboard}
       role="dialog"
       aria-label="Scroll up to get started!"
       aria-orientation="vertical"
-      style={`display: ${onboarded.peek() ? "none" : "flex"};`}
-      className="pointer-events-auto z-50 isolate absolute top-0 left-0 flex-col items-center justify-center w-full h-full bg-zinc-100 text-zinc-700 opacity-70 touch-manipulation"
-      onTouchStart={toggleOnboarded}
-      onPointerDown={toggleOnboarded}
-      onMouseDown={toggleOnboarded}
+      className="pointer-events-auto z-50 flex isolate absolute top-0 left-0 flex-col items-center justify-center w-full h-full bg-zinc-100 text-zinc-700 opacity-70 touch-manipulation"
+      onTouchStart={toggleIsOnboard}
+      onPointerDown={toggleIsOnboard}
+      onMouseDown={toggleIsOnboard}
     >
       <button
         type="button"
         aria-label="close dialog"
-        className="absolute top-0 right-0 text-3xl m-4"
+        className="absolute top-10 right-0 text-3xl m-4"
         tabIndex={0}
-        onClick={toggleOnboarded}
+        onClick={toggleIsOnboard}
       >
         &times;
       </button>

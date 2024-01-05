@@ -4,7 +4,6 @@ import AppContainer from "@components/AppContainer.tsx";
 import NavBar from "@components/NavBar.tsx";
 import { getExtrasForVerses, getPageOfVerses } from "@db";
 import Carousel from "@islands/Carousel.tsx";
-import Onboarding from "@islands/Onboarding.tsx";
 import Toolbar from "@islands/Toolbar.tsx";
 import type { ApiResponse, Verse } from "@lib/types.ts";
 import { createPartialFeedUrls, getApiParamsFromUrl, getIdFromKvEntry } from "@lib/utils.ts";
@@ -24,7 +23,7 @@ export const handler: Handlers<ApiResponse> = {
         cursor: iter.cursor,
       };
       const extras = await getExtrasForVerses(verses);
-      return ctx.render({ ...params, verses, extras, next });
+      return ctx.render({ ...params, verses, extras, next, origin: currentUrl });
     } catch (err) {
       console.error(err);
       return ctx.renderNotFound();
@@ -38,7 +37,6 @@ export default function Bible(props: PageProps<ApiResponse>) {
 
   return (
     <>
-      <Onboarding />
       <AppContainer>
         <main role="main" className="min-w-0 min-h-0 w-full h-full">
           <Toolbar url={props.url} />
@@ -46,9 +44,7 @@ export default function Bible(props: PageProps<ApiResponse>) {
             <Carousel res={data} next={next} extras={extras} />
           </Partial>
         </main>
-        <div className="min-w-0 min-h-0 w-full h-full">
-          <NavBar />
-        </div>
+        <NavBar />
       </AppContainer>
     </>
   );

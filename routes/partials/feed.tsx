@@ -24,7 +24,7 @@ export default defineRoute(async (req, ctx) => {
       cursor: iter.cursor,
     };
     const extras = await getExtrasForVerses(verses);
-    const data = { ...params, verses, extras, next };
+    const data = { ...params, verses, extras, next, origin: currentUrl };
     return (
       <Partial name="carousel">
         <Carousel res={data} next={next} extras={extras} />

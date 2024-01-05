@@ -9,8 +9,6 @@ export const handler: Handlers = {
       const { id } = ctx.params;
       const cleanId = escapeSql(id);
 
-      console.log(id, cleanId);
-
       const res = new URL(req.url);
       res.pathname = "/bible";
 

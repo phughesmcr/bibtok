@@ -1,5 +1,5 @@
 import type { ApiResponse, VerseExtras, VerseNextPageParams } from "@lib/types.ts";
-import { debounce, refFromId, setParamWithoutReload } from "@lib/utils.ts";
+import { debounce, refFromId, setParamsWithoutReload } from "@lib/utils.ts";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import Article from "../components/Article.tsx";
 
@@ -11,7 +11,7 @@ type CarouselProps = {
 
 export default function Carousel(props: CarouselProps) {
   const { res, extras, next } = props;
-  const { verses, pageSize, translation } = res;
+  const { verses, pageSize, translation, origin } = res;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [idxInView, setIdxInView] = useState<number>(0);
@@ -23,7 +23,7 @@ export default function Carousel(props: CarouselProps) {
 
   const setParams = useCallback(
     debounce((idx: number) => {
-      if (idx) setParamWithoutReload("idx", idx.toString());
+      if (idx) setParamsWithoutReload({ "idx": idx.toString() }, origin);
     }, 100),
     [],
   );
@@ -40,8 +40,10 @@ export default function Carousel(props: CarouselProps) {
     const debounced = debounce(() => {
       if (entry.isIntersecting) {
         const pos = entry.target?.getAttribute("aria-posinset");
-        if (pos) setIdxInView(parseInt(pos));
-        // TODO: trigger load next here
+        if (pos) {
+          setIdxInView(parseInt(pos));
+          // TODO: trigger load next here
+        }
       }
     }, 400);
     debounced();
