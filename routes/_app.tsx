@@ -8,7 +8,6 @@ import {
   HTML_DIR,
   HTML_LANG,
   LINK_CANONICAL,
-  LS_KEY_ONBOARD,
   META_AUTHOR,
   META_CHARSET,
   META_COLOR_SCHEME,
@@ -18,27 +17,21 @@ import {
   META_THEME_COLOR,
   META_VIEWPORT,
 } from "@lib/constants.ts";
-import { $isLoading, $isOnboard } from "@lib/state.ts";
-import { effect } from "@preact/signals";
+import { $currentUrl, $isLoading } from "@lib/state.ts";
 import { useEffect } from "preact/hooks";
 
 export default function App({ Component, url }: PageProps) {
+  $currentUrl.value = url;
+
   const handleLoading = () => {
     $isLoading.value = false;
   };
 
   useEffect(() => {
     const { window } = globalThis; // stops typescript complaining
-    window.addEventListener("load", handleLoading);
+    window.addEventListener("load", handleLoading, { passive: true });
     return () => window.removeEventListener("load", handleLoading);
   }, []);
-
-  effect(() => {
-    if ($isOnboard.value === false) {
-      const storedOnboardState = localStorage?.getItem(LS_KEY_ONBOARD);
-      if (storedOnboardState) $isOnboard.value = !!JSON.parse(storedOnboardState);
-    }
-  });
 
   return (
     <html lang={HTML_LANG} dir={HTML_DIR}>

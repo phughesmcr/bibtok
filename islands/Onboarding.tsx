@@ -2,7 +2,7 @@ import { LS_KEY_ONBOARD } from "@lib/constants.ts";
 import { $isOnboard } from "@lib/state.ts";
 import { effect } from "@preact/signals";
 import IconArrowBigUpLinesFilled from "icons/arrow-big-up-lines-filled.tsx";
-import { useCallback, useRef } from "preact/hooks";
+import { useCallback, useEffect, useRef } from "preact/hooks";
 
 export default function Onboarding() {
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -23,6 +23,9 @@ export default function Onboarding() {
     localStorage?.setItem(LS_KEY_ONBOARD, "true");
   }, []);
 
+  useEffect(() => {
+    $isOnboard.value = !!JSON.parse(localStorage?.getItem(LS_KEY_ONBOARD) ?? "false");
+  }, []);
   return (
     <div
       tabIndex={0}

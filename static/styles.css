@@ -155,7 +155,6 @@ article.ui.catechism small {
   user-select: none;
   -ms-overflow-style: none;
 }
-
 @keyframes moveUp {
   0% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
@@ -164,12 +163,14 @@ article.ui.catechism small {
 .animate-up {
   animation: moveUp 1s ease-in-out infinite;
 }
-
 .flag-icon {
   font-family: monospace;
 }
-
 [aria-hidden="true"], hidden, .hidden {
   display: none;
   visibility: hidden;
+}
+/* Give links pointing to the current page a green color */
+a[aria-current='page'] {
+  color:#a5f3fc;
 }
