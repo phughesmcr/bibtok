@@ -1,16 +1,18 @@
 import { Partial } from "$fresh/runtime.ts";
 import { PageProps } from "$fresh/server.ts";
+import Toolbar from "@islands/Toolbar.tsx";
 import type { ApiResponse } from "@lib/types.ts";
 import AppContainer from "../../components/AppContainer.tsx";
-import NavBar from "../../components/NavBar.tsx";
 import Catechism from "../../db/catechism.json" assert { type: "json" };
+import NavBar from "../../islands/NavBar.tsx";
 
 export default function CatechismHome(props: PageProps<ApiResponse>) {
-  const currentUrl = new URL(props.url);
+  const { url } = props;
   return (
     <>
       <AppContainer>
         <main role="main" className="min-w-0 min-h-0 w-full h-full">
+          <Toolbar hidden={true} />
           <Partial name="carousel">
             <div
               role="feed"
@@ -40,7 +42,7 @@ export default function CatechismHome(props: PageProps<ApiResponse>) {
           </Partial>
         </main>
         <div className="min-w-0 min-h-0 w-full h-full">
-          <NavBar />
+          <NavBar url={url} />
         </div>
       </AppContainer>
     </>

@@ -28,6 +28,7 @@ export default function App({ Component, url }: PageProps) {
   };
 
   useEffect(() => {
+    $currentUrl.value = url;
     const { window } = globalThis; // stops typescript complaining
     window.addEventListener("load", handleLoading, { passive: true });
     return () => window.removeEventListener("load", handleLoading);

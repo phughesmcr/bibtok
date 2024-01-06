@@ -1,31 +1,22 @@
-import { getBookIdFromTitle, getPericope, getPericopesForBook, listOfBooks } from "@data";
-import { API_DEFAULT_ID } from "@lib/constants.ts";
-import type { Translation } from "@lib/types.ts";
-import { getApiParamsFromUrl } from "@lib/utils.ts";
-import { computed, effect, useSignal } from "@preact/signals";
+import { listOfBooks } from "@data";
+import { $bookPericopes, $currentBook, $currentUrl, $pericopeSelected, $translation } from "@lib/state.ts";
+import { effect } from "@preact/signals";
 import { useRef } from "preact/hooks";
 
 type ToolbarProps = {
-  url: URL;
+  hidden?: boolean;
 };
 
 export default function Toolbar(props: ToolbarProps) {
-  const { url } = props;
-  const { translation, startFrom } = getApiParamsFromUrl(url);
-
-  const translationSelected = useSignal(translation);
-
-  const svString = (startFrom ?? API_DEFAULT_ID).toString().padStart(8, "0");
-  const bookSelected = useSignal(parseInt(svString.slice(0, 2) || "01", 10));
-
-  const bookPericopes = computed(() => getPericopesForBook(bookSelected.value));
+  const { hidden } = props;
+  if (hidden) {
+    return <></>;
+  }
 
   const periRef = useRef<HTMLSelectElement>(null);
-  const startPeri = getPericope(startFrom ?? API_DEFAULT_ID);
-  const pericopeSelected = useSignal(bookPericopes.value?.findIndex((p) => p.t === startPeri?.t) || 0);
   effect(() => {
     if (periRef.current) {
-      periRef.current.value = pericopeSelected.value.toString();
+      periRef.current.value = $pericopeSelected.value.toString();
     }
   });
 
@@ -55,9 +46,9 @@ export default function Toolbar(props: ToolbarProps) {
           id="translation-select"
           className="p-1 rounded-full text-zinc-950 w-full"
           onChange={(e) => {
-            translationSelected.value = e.currentTarget.value as Translation;
             const newUrl = new URL(location.href);
-            newUrl.searchParams.set("t", `${translationSelected.value}`);
+            newUrl.searchParams.set("t", `${$translation.value}`);
+            $currentUrl.value = newUrl;
             location.href = newUrl.toString();
           }}
         >
@@ -66,7 +57,7 @@ export default function Toolbar(props: ToolbarProps) {
               <option
                 title={tr.title}
                 aria-label={tr.title}
-                selected={translationSelected.value === tr.value}
+                selected={$translation.value === tr.value}
                 value={tr.value}
               >
                 {tr.flag && <span className="flag-icon">{tr.flag}&nbsp;</span>}
@@ -86,12 +77,13 @@ export default function Toolbar(props: ToolbarProps) {
           id="book-select"
           className="p-1 rounded-full text-zinc-950 w-full"
           onChange={(e) => {
-            const bookId = getBookIdFromTitle(e.currentTarget.value) ?? 1;
-            bookSelected.value = bookId;
             const newUrl = new URL(location.href);
             newUrl.pathname = `/bible/${e.currentTarget.value}`;
+            newUrl.searchParams.delete("sv");
             newUrl.searchParams.delete("ev");
             newUrl.searchParams.delete("cursor");
+            newUrl.searchParams.delete("idx");
+            $currentUrl.value = newUrl;
             location.href = newUrl.toString();
           }}
         >
@@ -100,7 +92,7 @@ export default function Toolbar(props: ToolbarProps) {
               key={index}
               title={title}
               aria-label={title}
-              selected={index + 1 === bookSelected.value}
+              selected={index + 1 === $currentBook.value}
               value={apiKey}
             >
               {title}
@@ -123,24 +115,24 @@ export default function Toolbar(props: ToolbarProps) {
           className="p-1 rounded-full text-zinc-950 w-full"
           onChange={(e) => {
             const idx = parseInt(e.currentTarget.value, 10);
-            pericopeSelected.value = idx;
-            const { r } = bookPericopes.value[idx];
-            console.log(r);
+            const { r } = $bookPericopes.value[idx];
             const newUrl = new URL(location.href);
             newUrl.searchParams.set("sv", `${r[0]}`);
             newUrl.searchParams.delete("ev");
             newUrl.searchParams.delete("cursor");
+            newUrl.searchParams.delete("idx");
+            $currentUrl.value = newUrl;
             location.href = newUrl.toString();
           }}
         >
-          {bookPericopes.value.map((pericope, index) => {
+          {$bookPericopes.value.map((pericope, index) => {
             const { t } = pericope;
             return (
               <option
                 key={index}
                 title={t}
                 aria-label={t}
-                selected={index === pericopeSelected.value}
+                selected={index === $pericopeSelected.value}
                 value={`${index}`}
               >
                 {t}

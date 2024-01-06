@@ -14,6 +14,7 @@ import * as $lectionary_index from "./routes/lectionary/index.tsx";
 import * as $partials_feed from "./routes/partials/feed.tsx";
 import * as $Carousel from "./islands/Carousel.tsx";
 import * as $Loader from "./islands/Loader.tsx";
+import * as $NavBar from "./islands/NavBar.tsx";
 import * as $Onboarding from "./islands/Onboarding.tsx";
 import * as $Toolbar from "./islands/Toolbar.tsx";
 import { type Manifest } from "$fresh/server.ts";
@@ -34,6 +35,7 @@ const manifest = {
   islands: {
     "./islands/Carousel.tsx": $Carousel,
     "./islands/Loader.tsx": $Loader,
+    "./islands/NavBar.tsx": $NavBar,
     "./islands/Onboarding.tsx": $Onboarding,
     "./islands/Toolbar.tsx": $Toolbar,
   },

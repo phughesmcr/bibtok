@@ -13,8 +13,8 @@ export default function Onboarding() {
       dialogRef.current?.classList.add("hidden");
       dialogRef.current?.classList.remove("flex");
     } else {
-      dialogRef.current?.classList.add("flex");
       dialogRef.current?.classList.remove("hidden");
+      dialogRef.current?.classList.add("flex");
     }
   });
 
@@ -26,6 +26,7 @@ export default function Onboarding() {
   useEffect(() => {
     $isOnboard.value = !!JSON.parse(localStorage?.getItem(LS_KEY_ONBOARD) ?? "false");
   }, []);
+
   return (
     <div
       tabIndex={0}

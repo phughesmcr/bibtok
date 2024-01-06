@@ -224,10 +224,17 @@ export function memoizeWithLimitedHistory<T extends (...args: any[]) => void>(fn
   };
 }
 
-export function setParamsWithoutReload(params: Record<string, string>, url: URL | string) {
+export function setParamsWithoutReload(params: Partial<ApiParams>, url: URL | string) {
   const newUrl = new URL(url);
   for (const [key, value] of Object.entries(params)) {
-    newUrl.searchParams.set(key, value);
+    if (!value) {
+      newUrl.searchParams.delete(key);
+    } else {
+      newUrl.searchParams.set(
+        key,
+        (key === "sv" || key === "ev") ? value.toString().padStart(8, "0") : value?.toString(),
+      );
+    }
   }
   window.history.pushState(null, "", newUrl.toString());
   return newUrl;
