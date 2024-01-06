@@ -1,17 +1,16 @@
-import type { ApiResponse, VerseExtras, VerseNextPageParams } from "@lib/types.ts";
-import { debounce, refFromId, setParamsWithoutReload } from "@lib/utils.ts";
+import { $currentUrl } from "@lib/state.ts";
+import type { ApiResponse } from "@lib/types.ts";
+import { debounce, refFromId } from "@lib/utils.ts";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import Article from "../components/Article.tsx";
 
 type CarouselProps = {
   res: ApiResponse;
-  extras?: VerseExtras;
-  next?: VerseNextPageParams;
 };
 
 export default function Carousel(props: CarouselProps) {
-  const { res, extras, next } = props;
-  const { verses, pageSize, translation, origin } = res;
+  const { res } = props;
+  const { verses, pageSize, translation, origin, extras, next } = res;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [idxInView, setIdxInView] = useState<number>(0);
@@ -23,7 +22,11 @@ export default function Carousel(props: CarouselProps) {
 
   const setParams = useCallback(
     debounce((idx: number) => {
-      if (idx) setParamsWithoutReload({ "idx": idx.toString() }, origin);
+      if (idx) {
+        const newUrl = new URL($currentUrl.value);
+        newUrl.searchParams.set("idx", `${idx}`);
+        $currentUrl.value = newUrl;
+      }
     }, 100),
     [],
   );

@@ -4,26 +4,33 @@ import AppContainer from "@components/AppContainer.tsx";
 import { getExtrasForVerses, getPageOfVerses } from "@db";
 import Carousel from "@islands/Carousel.tsx";
 import Toolbar from "@islands/Toolbar.tsx";
+import { $currentUrl } from "@lib/state.ts";
 import type { ApiResponse, Verse } from "@lib/types.ts";
 import { createPartialFeedUrls, getApiParamsFromUrl, getIdFromKvEntry } from "@lib/utils.ts";
+import { effect } from "@preact/signals";
 import NavBar from "../../islands/NavBar.tsx";
+
+const createResponse = async (req: Request): Promise<ApiResponse> => {
+  const currentUrl = new URL(req.url);
+  const params = getApiParamsFromUrl(req.url);
+  const iter = await getPageOfVerses(params);
+  const verses: Verse[] = [];
+  for await (const verse of iter) {
+    verses.push([getIdFromKvEntry(verse), verse.value]);
+  }
+  const next = {
+    ...createPartialFeedUrls(currentUrl, { ...params, cursor: iter.cursor }),
+    cursor: iter.cursor,
+  };
+  const extras = await getExtrasForVerses(verses);
+  return { ...params, verses, extras, next, origin: currentUrl };
+};
 
 export const handler: Handlers<ApiResponse> = {
   async GET(req, ctx) {
     try {
-      const currentUrl = new URL(req.url);
-      const params = getApiParamsFromUrl(req.url);
-      const iter = await getPageOfVerses(params);
-      const verses: Verse[] = [];
-      for await (const verse of iter) {
-        verses.push([getIdFromKvEntry(verse), verse.value]);
-      }
-      const next = {
-        ...createPartialFeedUrls(currentUrl, { ...params, cursor: iter.cursor }),
-        cursor: iter.cursor,
-      };
-      const extras = await getExtrasForVerses(verses);
-      return ctx.render({ ...params, verses, extras, next, origin: currentUrl });
+      const res = await createResponse(req);
+      return ctx.render(res);
     } catch (err) {
       console.error(err);
       return ctx.renderNotFound();
@@ -33,7 +40,10 @@ export const handler: Handlers<ApiResponse> = {
 
 export default function Bible(props: PageProps<ApiResponse>) {
   const { data, url } = props;
-  const { extras, next } = data;
+
+  effect(() => {
+    $currentUrl.value = url;
+  });
 
   return (
     <>
@@ -41,10 +51,10 @@ export default function Bible(props: PageProps<ApiResponse>) {
         <main role="main" className="min-w-0 min-h-0 w-full h-full">
           <Toolbar hidden={false} />
           <Partial name="carousel">
-            <Carousel res={data} next={next} extras={extras} />
+            <Carousel res={data} />
           </Partial>
         </main>
-        <NavBar url={url} />
+        <NavBar />
       </AppContainer>
     </>
   );

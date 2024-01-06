@@ -21,7 +21,6 @@ export default function AppContainer(props: AppContainerProps) {
         <div
           id="inner-container"
           className="no-interaction relative w-full h-full grid grid-cols-1"
-          f-client-nav
         >
           {children}
         </div>

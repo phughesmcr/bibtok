@@ -5,16 +5,11 @@ import IconMusicHeart from "icons/music-heart.tsx";
 import IconZoomQuestion from "icons/zoom-question.tsx";
 import NavButton from "../components/NavButton.tsx";
 
-type NavbarProps = {
-  url: URL;
-};
-
-export default function NavBar(props: NavbarProps) {
-  const { url } = props;
-  const bibleUrl = new URL(url);
+export default function NavBar() {
+  const bibleUrl = new URL($currentUrl.value);
   bibleUrl.pathname = "/bible";
 
-  const psalmsUrl = new URL(url);
+  const psalmsUrl = new URL(bibleUrl);
   psalmsUrl.searchParams.delete("sv");
   psalmsUrl.searchParams.delete("ev");
   psalmsUrl.searchParams.delete("cursor");
@@ -22,12 +17,12 @@ export default function NavBar(props: NavbarProps) {
   const proverbsUrl = new URL(psalmsUrl);
   const catechismUrl = new URL(psalmsUrl);
 
-  psalmsUrl.pathname = "/psalms";
-  proverbsUrl.pathname = "/proverbs";
+  psalmsUrl.pathname = "/bible/psalms";
+  proverbsUrl.pathname = "/bible/proverbs";
   catechismUrl.pathname = "/catechism";
 
   return (
-    <div className="min-w-0 min-h-0 w-full h-full" f-client-nav={false}>
+    <div className="min-w-0 min-h-0 w-full h-full">
       <nav
         role={"navigation"}
         aria-label=""
@@ -53,12 +48,6 @@ export default function NavBar(props: NavbarProps) {
         >
           <IconMusicHeart className="w-5 h-5" />
         </NavButton>
-
-        {
-          /* <NavButton href="/lectionary" innerText="Daily">
-        <IconCalendarExclamation className="w-5 h-5" />
-      </NavButton> */
-        }
 
         <NavButton
           href={proverbsUrl.toString()}

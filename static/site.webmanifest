@@ -14,6 +14,7 @@
     "education",
     "faith"
   ],
+  "id": "/",
   "icons": [
     {
       "src": "img\/android-icon-36x36.png",
@@ -66,7 +67,7 @@
   "shortcuts": [
     {
       "name": "Psalms",
-      "url": "/bible/19001001",
+      "url": "/bible/psalms",
       "description": "The Book of Psalms",
       "icons": [
         {
@@ -79,7 +80,7 @@
     },
     {
       "name": "Proverbs",
-      "url": "/bible/20001001",
+      "url": "/bible/proverbs",
       "description": "The Book of Psalms",
       "icons": [
         {

@@ -46,3 +46,11 @@ export const enum KvPath {
 export const NOOP_CURSOR = "-1" as const;
 
 export const LS_KEY_ONBOARD = "hs-onboard" as const;
+
+export const ROUTES_WHITELIST = Object.freeze([
+  "api",
+  "bible",
+  "catechism",
+  "lectionary",
+  "partials",
+]);

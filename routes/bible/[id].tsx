@@ -16,7 +16,9 @@ export const handler: Handlers = {
       const bookId = getBookIdFromTitle(cleanId);
       if (bookId && !isNaN(bookId) && bookId >= API_MIN_BOOK_ID && bookId <= API_MAX_BOOK_ID) {
         res.searchParams.set("sv", `${bookId}001001`);
-        res.searchParams.set("ev", `${bookId}999999`);
+        res.searchParams.delete("ev");
+        res.searchParams.delete("cursor");
+        res.searchParams.delete("idx");
         return Response.redirect(res.toString(), 302);
       }
 
@@ -27,6 +29,8 @@ export const handler: Handlers = {
       }
       res.searchParams.set("sv", cleanId);
       res.searchParams.delete("ev");
+      res.searchParams.delete("cursor");
+      res.searchParams.delete("idx");
       return Response.redirect(res.toString(), 302);
     } catch (err) {
       console.error(err);

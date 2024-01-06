@@ -10,7 +10,6 @@ import * as $bible_id_ from "./routes/bible/[id].tsx";
 import * as $bible_index from "./routes/bible/index.tsx";
 import * as $catechism_index from "./routes/catechism/index.tsx";
 import * as $index from "./routes/index.tsx";
-import * as $lectionary_index from "./routes/lectionary/index.tsx";
 import * as $partials_feed from "./routes/partials/feed.tsx";
 import * as $Carousel from "./islands/Carousel.tsx";
 import * as $Loader from "./islands/Loader.tsx";
@@ -29,7 +28,6 @@ const manifest = {
     "./routes/bible/index.tsx": $bible_index,
     "./routes/catechism/index.tsx": $catechism_index,
     "./routes/index.tsx": $index,
-    "./routes/lectionary/index.tsx": $lectionary_index,
     "./routes/partials/feed.tsx": $partials_feed,
   },
   islands: {

@@ -17,18 +17,15 @@ import {
   META_THEME_COLOR,
   META_VIEWPORT,
 } from "@lib/constants.ts";
-import { $currentUrl, $isLoading } from "@lib/state.ts";
+import { $isLoading } from "@lib/state.ts";
 import { useEffect } from "preact/hooks";
 
-export default function App({ Component, url }: PageProps) {
-  $currentUrl.value = url;
-
+export default function App({ Component }: PageProps) {
   const handleLoading = () => {
     $isLoading.value = false;
   };
 
   useEffect(() => {
-    $currentUrl.value = url;
     const { window } = globalThis; // stops typescript complaining
     window.addEventListener("load", handleLoading, { passive: true });
     return () => window.removeEventListener("load", handleLoading);
@@ -99,8 +96,12 @@ export default function App({ Component, url }: PageProps) {
         <link rel="preconnect" href="https://fonts.gstatic.com" />
 
         <link rel="stylesheet" href={asset("/styles.css")} />
+        <link
+          rel="stylesheet"
+          href={"https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"}
+        />
       </head>
-      <body className="no-interaction relative overflow-hidden bg-zinc-950 text-zinc-100">
+      <body className="no-interaction relative overflow-hidden bg-zinc-950 text-zinc-100" f-client-nav>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <Loader />
         <Onboarding />

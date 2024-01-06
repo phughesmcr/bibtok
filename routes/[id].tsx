@@ -1,17 +1,10 @@
 import type { Handlers } from "$fresh/server.ts";
-
-const _routes = [
-  "api",
-  "bible",
-  "catechism",
-  "lectionary",
-  "partials",
-];
+import { ROUTES_WHITELIST } from "@lib/constants.ts";
 
 export const handler: Handlers = {
   GET(req, ctx) {
     const id = ctx.params.id;
-    if (!id || _routes.includes(id.toLowerCase().trim())) {
+    if (!id || ROUTES_WHITELIST.includes(id.toLowerCase().trim())) {
       return ctx.next();
     }
     const url = new URL(req.url);

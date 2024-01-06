@@ -7,7 +7,6 @@ import Catechism from "../../db/catechism.json" assert { type: "json" };
 import NavBar from "../../islands/NavBar.tsx";
 
 export default function CatechismHome(props: PageProps<ApiResponse>) {
-  const { url } = props;
   return (
     <>
       <AppContainer>
@@ -42,7 +41,7 @@ export default function CatechismHome(props: PageProps<ApiResponse>) {
           </Partial>
         </main>
         <div className="min-w-0 min-h-0 w-full h-full">
-          <NavBar url={url} />
+          <NavBar />
         </div>
       </AppContainer>
     </>
