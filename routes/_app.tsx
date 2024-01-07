@@ -1,5 +1,6 @@
 import { asset } from "$fresh/runtime.ts";
 import { type PageProps } from "$fresh/server.ts";
+import Fab from "@islands/Fab.tsx";
 import Loader from "@islands/Loader.tsx";
 import Onboarding from "@islands/Onboarding.tsx";
 import {
@@ -17,20 +18,9 @@ import {
   META_THEME_COLOR,
   META_VIEWPORT,
 } from "@lib/constants.ts";
-import { $isLoading } from "@lib/state.ts";
-import { useEffect } from "preact/hooks";
+import { $showFab } from "@lib/state.ts";
 
 export default function App({ Component }: PageProps) {
-  const handleLoading = () => {
-    $isLoading.value = false;
-  };
-
-  useEffect(() => {
-    const { window } = globalThis; // stops typescript complaining
-    window.addEventListener("load", handleLoading, { passive: true });
-    return () => window.removeEventListener("load", handleLoading);
-  }, []);
-
   return (
     <html lang={HTML_LANG} dir={HTML_DIR}>
       <head>
@@ -105,6 +95,7 @@ export default function App({ Component }: PageProps) {
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <Loader />
         <Onboarding />
+        {$showFab.value && <Fab />}
         <Component />
         <script src={asset("/pwa-loader.js")} type="module" />
       </body>

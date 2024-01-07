@@ -1,6 +1,7 @@
-import { getPericope } from "@data";
+import { getBookInfoById, getPericope } from "@data";
 import type { BookInfo, Verse } from "@lib/types.ts";
-import { refFromId } from "@lib/utils.ts";
+import { getIdFromKvEntry, refFromId } from "@lib/utils.ts";
+import IconAffiliate from "icons/affiliate.tsx";
 
 type ArticleProps = {
   translation: string;
@@ -10,10 +11,11 @@ type ArticleProps = {
   posinset?: number;
   setsize?: number;
   bookInfo?: BookInfo;
+  crossRefs?: Deno.KvEntry<string>[];
 };
 
 export default function Article(props: ArticleProps) {
-  const { idx, key, translation, verse, posinset, setsize, bookInfo } = props;
+  const { idx, key, translation, verse, posinset, setsize, bookInfo, crossRefs } = props;
   const [id, text] = verse;
 
   const [b, c, v] = refFromId(id);
@@ -53,6 +55,32 @@ export default function Article(props: ArticleProps) {
         </p>
       </div>
       <p>{text}</p>
+
+      <div className="absolute right-0 bottom-24 cursor-pointer">
+        <button
+          type="button"
+          class="px-3 py-2 bg-transparent text-white"
+          title="Cross References"
+          aria-label="Find cross references for this verse"
+        >
+          <IconAffiliate class="w-14 h-14" />
+        </button>
+      </div>
+
+      <section className="absolute top-0 left-0 hidden">
+        {crossRefs?.map((ref) => {
+          const { value } = ref;
+          const id = getIdFromKvEntry(ref);
+          const [b, c, v] = refFromId(id);
+          const title = getBookInfoById(b)?.title_short;
+          return (
+            <div>
+              <p>{value}</p>
+              <small>{title} {c}:{v}</small>
+            </div>
+          );
+        })}
+      </section>
     </article>
   );
 }

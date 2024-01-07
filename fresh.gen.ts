@@ -13,6 +13,7 @@ import * as $index from "./routes/index.tsx";
 import * as $partials_feed from "./routes/partials/feed.tsx";
 import * as $BookSelect from "./islands/BookSelect.tsx";
 import * as $Carousel from "./islands/Carousel.tsx";
+import * as $Fab from "./islands/Fab.tsx";
 import * as $Loader from "./islands/Loader.tsx";
 import * as $NavBar from "./islands/NavBar.tsx";
 import * as $Onboarding from "./islands/Onboarding.tsx";
@@ -36,6 +37,7 @@ const manifest = {
   islands: {
     "./islands/BookSelect.tsx": $BookSelect,
     "./islands/Carousel.tsx": $Carousel,
+    "./islands/Fab.tsx": $Fab,
     "./islands/Loader.tsx": $Loader,
     "./islands/NavBar.tsx": $NavBar,
     "./islands/Onboarding.tsx": $Onboarding,

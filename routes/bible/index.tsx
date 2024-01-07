@@ -4,10 +4,8 @@ import AppContainer from "@components/AppContainer.tsx";
 import { getExtrasForVerses, getPageOfVerses } from "@db";
 import Carousel from "@islands/Carousel.tsx";
 import Toolbar from "@islands/Toolbar.tsx";
-import { $currentUrl } from "@lib/state.ts";
 import type { ApiResponse, Verse } from "@lib/types.ts";
 import { createPartialFeedUrls, getApiParamsFromUrl, getIdFromKvEntry } from "@lib/utils.ts";
-import { effect } from "@preact/signals";
 import NavBar from "../../islands/NavBar.tsx";
 
 const createResponse = async (req: Request): Promise<ApiResponse> => {
@@ -39,19 +37,13 @@ export const handler: Handlers<ApiResponse> = {
 };
 
 export default function Bible(props: PageProps<ApiResponse>) {
-  const { data, url } = props;
-
-  effect(() => {
-    $currentUrl.value = url;
-  });
-
   return (
     <>
       <AppContainer>
         <main role="main" className="min-w-0 min-h-0 w-full h-full">
           <Toolbar />
           <Partial name="carousel">
-            <Carousel res={data} />
+            <Carousel res={props.data} />
           </Partial>
         </main>
         <NavBar />

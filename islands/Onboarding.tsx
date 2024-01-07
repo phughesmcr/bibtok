@@ -50,7 +50,7 @@ export default function Onboarding() {
       >
         &times;
       </button>
-      <IconArrowBigUpLinesFilled className="w-28 h-28 animate-up" />
+      <IconArrowBigUpLinesFilled className="w-28 h-28 animate-bounce" />
       <p className="font-bold text-5xl">Scroll Up</p>
     </div>
   );

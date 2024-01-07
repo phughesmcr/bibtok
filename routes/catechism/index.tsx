@@ -1,5 +1,5 @@
 import { Partial } from "$fresh/runtime.ts";
-import { PageProps } from "$fresh/server.ts";
+import type { PageProps } from "$fresh/server.ts";
 import Toolbar from "@islands/Toolbar.tsx";
 import type { ApiResponse } from "@lib/types.ts";
 import AppContainer from "../../components/AppContainer.tsx";
@@ -11,7 +11,7 @@ export default function CatechismHome(props: PageProps<ApiResponse>) {
     <>
       <AppContainer>
         <main role="main" className="min-w-0 min-h-0 w-full h-full">
-          <Toolbar hidden={true} />
+          <Toolbar />
           <Partial name="carousel">
             <div
               role="feed"

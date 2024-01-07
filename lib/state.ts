@@ -70,6 +70,10 @@ export const $currentPericopeIdx = computed(() =>
   $bookPericopes.value?.findIndex((p) => p.t === $currentPericope.value?.t)
 );
 
+// FAB
+export const $showFab = signal<boolean>(true);
+export const $fabUrl = signal<URL>(new URL("https://www.achurchnearyou.com/"));
+
 // internal signals
 
 export const $isLoading = signal<boolean>(true);

@@ -1,4 +1,4 @@
-import { $currentUrl, $currentVerse } from "@lib/state.ts";
+import { $currentUrl, $currentVerse, $isLoading } from "@lib/state.ts";
 import type { ApiResponse } from "@lib/types.ts";
 import { debounce, refFromId } from "@lib/utils.ts";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
@@ -37,6 +37,7 @@ export default function Carousel(props: CarouselProps) {
 
   useEffect(() => {
     if (idxInView) setParams(idxInView);
+    $isLoading.value = false;
   }, [idxInView, setParams]);
 
   // START: SCROLLING OBSERVER
@@ -89,6 +90,7 @@ export default function Carousel(props: CarouselProps) {
           posinset={index + 1}
           setsize={((pageSize ?? -1) + 1) || -1} // (pageSize + 1) or -1
           bookInfo={extras?.books[refFromId(verse[0])[0]]}
+          crossRefs={extras?.crossRefs[verse[0]]}
         />
       ))}
       {next && (

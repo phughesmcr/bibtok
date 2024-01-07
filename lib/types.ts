@@ -43,7 +43,7 @@ export type ApiParams = {
 
 export type VerseExtras = {
   books: Record<number, BookInfo>;
-  crossRefs: Record<number, CrossRef[]>;
+  crossRefs: Record<number, Deno.KvEntry<string>[]>;
 };
 
 export type VerseNextPageParams = {

@@ -44,7 +44,7 @@ export const getPageOfVerses = (params: ApiParams) => {
   return db.list<string>({ prefix, start, end }, { limit: cleanedPageSize, cursor: cleanedCursor });
 };
 
-export const getExtrasForVerses = async (verses: Verse[]): Promise<VerseExtras> => {
+export const getExtrasForVerses = async (verses: Verse[], t = API_DEFAULT_TRANSLATION): Promise<VerseExtras> => {
   const res: VerseExtras = { books: {}, crossRefs: {} };
 
   const books = [...new Set(verses.map(([id, _text]) => parseInt(id.toString().padStart(8, "0").substring(0, 2), 10)))];
@@ -58,7 +58,21 @@ export const getExtrasForVerses = async (verses: Verse[]): Promise<VerseExtras> 
   for (const [id, _text] of verses) {
     const cleanedId = cleanId(id);
     const refs = await db.get<CrossRef[]>([KvPath.CROSSREFS, cleanedId]).then((res) => res.value);
-    if (refs) res.crossRefs[cleanedId] = refs;
+    if (refs) {
+      refs.sort((a, b) => a[2] - b[2]);
+      const finalCrossRefs = [];
+      for (const ref of refs) {
+        const [sv, ev] = ref;
+        const refVerse = await db.list<string>({
+          start: [KvPath.TRANSLATIONS, t, sv],
+          end: [KvPath.TRANSLATIONS, t, ev],
+        });
+        for await (const a of refVerse) {
+          finalCrossRefs.push(a);
+        }
+      }
+      res.crossRefs[cleanedId] = finalCrossRefs;
+    }
   }
 
   return res;

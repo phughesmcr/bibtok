@@ -21,7 +21,7 @@ export const META_COLOR_SCHEME = "dark" as const;
 export const LINK_CANONICAL = "https://www.holyscroller.app" as const;
 
 export const API_DEFAULT_ID = 1001001 as const;
-export const API_DEFAULT_PAGE_SIZE = 29 as const;
+export const API_DEFAULT_PAGE_SIZE = 14 as const;
 export const API_DEFAULT_TRANSLATION: Translation = "kjv" as const;
 export const API_MAX_ID = 66022021 as const;
 export const API_MAX_PAGE_SIZE = 100 as const;
