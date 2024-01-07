@@ -38,6 +38,7 @@ export default function Article(props: ArticleProps) {
       key={key}
       aria-posinset={posinset}
       aria-setsize={setsize}
+      data-verse={id}
       tabIndex={0}
       className="ui w-full h-full snap-start snap-always"
     >

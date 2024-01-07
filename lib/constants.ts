@@ -54,3 +54,10 @@ export const ROUTES_WHITELIST = Object.freeze([
   "lectionary",
   "partials",
 ]);
+
+export const TRANSLATIONS = [
+  { title: "The American Standard Version", value: "asv", flag: "🇺🇸", innerText: "ASV" },
+  { title: "The Bible in Basic English", value: "bbe", flag: "🇬🇧", innerText: "BBE" },
+  { title: "The King James Version", value: "kjv", flag: "🇬🇧", innerText: "KJV" },
+  { title: "Chinese Union Version (traditional)", value: "cut", flag: "🇨🇳", innerText: "和合本 (Traditional)" },
+] as const;

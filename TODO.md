@@ -8,10 +8,9 @@
 - JSON+LD
 - Add a "lectionary" tab at the top
 - Light theme
-- Table of contents
 - "About" page
 - Commentaries
 - share button
 - floating toast bubble
-- honour DNT
 - disable "simplified view" popup on mobile
+- add other translations and catechisms

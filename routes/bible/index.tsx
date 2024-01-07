@@ -49,7 +49,7 @@ export default function Bible(props: PageProps<ApiResponse>) {
     <>
       <AppContainer>
         <main role="main" className="min-w-0 min-h-0 w-full h-full">
-          <Toolbar hidden={false} />
+          <Toolbar />
           <Partial name="carousel">
             <Carousel res={data} />
           </Partial>

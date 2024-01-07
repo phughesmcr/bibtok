@@ -1,4 +1,4 @@
-import { $currentUrl } from "@lib/state.ts";
+import { $currentUrl, $currentVerse } from "@lib/state.ts";
 import type { ApiResponse } from "@lib/types.ts";
 import { debounce, refFromId } from "@lib/utils.ts";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
@@ -12,6 +12,10 @@ export default function Carousel(props: CarouselProps) {
   const { res } = props;
   const { verses, pageSize, translation, origin, extras, next } = res;
 
+  useEffect(() => {
+    $currentVerse.value = verses[0][0];
+  }, []);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [idxInView, setIdxInView] = useState<number>(0);
 
@@ -22,7 +26,7 @@ export default function Carousel(props: CarouselProps) {
 
   const setParams = useCallback(
     debounce((idx: number) => {
-      if (idx) {
+      if (idx && $currentUrl.value) {
         const newUrl = new URL($currentUrl.value);
         newUrl.searchParams.set("idx", `${idx}`);
         $currentUrl.value = newUrl;
@@ -43,10 +47,9 @@ export default function Carousel(props: CarouselProps) {
     const debounced = debounce(() => {
       if (entry.isIntersecting) {
         const pos = entry.target?.getAttribute("aria-posinset");
-        if (pos) {
-          setIdxInView(parseInt(pos));
-          // TODO: trigger load next here
-        }
+        const id = entry.target?.getAttribute("data-verse");
+        if (pos) setIdxInView(parseInt(pos));
+        if (id) $currentVerse.value = parseInt(id, 10);
       }
     }, 400);
     debounced();

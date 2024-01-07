@@ -11,11 +11,14 @@ import * as $bible_index from "./routes/bible/index.tsx";
 import * as $catechism_index from "./routes/catechism/index.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $partials_feed from "./routes/partials/feed.tsx";
+import * as $BookSelect from "./islands/BookSelect.tsx";
 import * as $Carousel from "./islands/Carousel.tsx";
 import * as $Loader from "./islands/Loader.tsx";
 import * as $NavBar from "./islands/NavBar.tsx";
 import * as $Onboarding from "./islands/Onboarding.tsx";
+import * as $PericopeSelect from "./islands/PericopeSelect.tsx";
 import * as $Toolbar from "./islands/Toolbar.tsx";
+import * as $TranslationSelect from "./islands/TranslationSelect.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -31,11 +34,14 @@ const manifest = {
     "./routes/partials/feed.tsx": $partials_feed,
   },
   islands: {
+    "./islands/BookSelect.tsx": $BookSelect,
     "./islands/Carousel.tsx": $Carousel,
     "./islands/Loader.tsx": $Loader,
     "./islands/NavBar.tsx": $NavBar,
     "./islands/Onboarding.tsx": $Onboarding,
+    "./islands/PericopeSelect.tsx": $PericopeSelect,
     "./islands/Toolbar.tsx": $Toolbar,
+    "./islands/TranslationSelect.tsx": $TranslationSelect,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;
