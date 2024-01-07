@@ -90,7 +90,7 @@ export default function Carousel(props: CarouselProps) {
           posinset={index + 1}
           setsize={((pageSize ?? -1) + 1) || -1} // (pageSize + 1) or -1
           bookInfo={extras?.books[refFromId(verse[0])[0]]}
-          crossRefs={extras?.crossRefs[verse[0]]}
+          /* crossRefs={extras?.crossRefs[verse[0]]} */
         />
       ))}
       {next && (

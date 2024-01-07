@@ -1,7 +1,6 @@
-import { getBookInfoById, getPericope } from "@data";
+import { getPericope } from "@data";
 import type { BookInfo, Verse } from "@lib/types.ts";
-import { getIdFromKvEntry, refFromId } from "@lib/utils.ts";
-import IconAffiliate from "icons/affiliate.tsx";
+import { refFromId } from "@lib/utils.ts";
 
 type ArticleProps = {
   translation: string;
@@ -56,7 +55,8 @@ export default function Article(props: ArticleProps) {
       </div>
       <p>{text}</p>
 
-      <div className="absolute right-0 bottom-24 cursor-pointer">
+      {
+        /* <div className="absolute right-0 bottom-24 cursor-pointer">
         <button
           type="button"
           class="px-3 py-2 bg-transparent text-white"
@@ -80,7 +80,8 @@ export default function Article(props: ArticleProps) {
             </div>
           );
         })}
-      </section>
+      </section> */
+      }
     </article>
   );
 }
