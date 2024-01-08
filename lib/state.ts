@@ -8,8 +8,8 @@ import {
   API_MIN_ID,
   API_MIN_PAGE_SIZE,
 } from "@lib/constants.ts";
-import type { ApiParams } from "@lib/types.ts";
-import { clamp, getApiParamsFromUrl, refFromId, setParamsWithoutReload } from "@lib/utils.ts";
+import type { ApiParams, VerseId } from "@lib/types.ts";
+import { clamp, getApiParamsFromUrl, getRefFromId, setParamsWithoutReload } from "@lib/utils.ts";
 import { computed, effect, signal } from "@preact/signals";
 
 // URL based state
@@ -60,7 +60,7 @@ export const $cursor = computed(() => $currentParams.value?.cursor);
 
 export const $currentVerse = signal<number>(API_DEFAULT_ID);
 
-export const $currentRef = computed(() => refFromId($currentVerse.value));
+export const $currentRef = computed(() => getRefFromId($currentVerse.value as VerseId));
 
 export const $bookPericopes = computed(() => $currentRef.value[0] ? getPericopesForBook($currentRef.value[0]) : []);
 

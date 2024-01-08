@@ -1,5 +1,5 @@
 import { asset } from "$fresh/runtime.ts";
-import { type PageProps } from "$fresh/server.ts";
+import type { PageProps } from "$fresh/server.ts";
 import Fab from "@islands/Fab.tsx";
 import Loader from "@islands/Loader.tsx";
 import Onboarding from "@islands/Onboarding.tsx";
@@ -44,7 +44,7 @@ export default function App({ Component }: PageProps) {
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
         <meta name="msapplication-TileColor" content={META_THEME_COLOR} />
-        <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png" />
+        <meta name="msapplication-TileImage" content={asset("img/ms-icon-144x144.png")} />
         <meta name="msapplication-tap-highlight" content="no" />
 
         <meta property="og:type" content="website" />

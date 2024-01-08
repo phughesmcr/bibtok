@@ -37,7 +37,7 @@ export const PSALMS_END = 19015006 as const;
 export const PROVERBS_START = 20001001 as const;
 export const PROVERBS_END = 20031031 as const;
 
-export const enum KvPath {
+export const enum KV_PATHS {
   BOOKS = "books",
   CROSSREFS = "crossrefs",
   TRANSLATIONS = "translations",

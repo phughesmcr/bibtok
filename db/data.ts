@@ -1,5 +1,5 @@
-import type { Pericope } from "@lib/types.ts";
-import { refFromId } from "@lib/utils.ts";
+import type { Pericope, VerseId } from "@lib/types.ts";
+import { getRefFromId } from "@lib/utils.ts";
 import BOOK_INFO from "./book_info.json" assert { type: "json" };
 import BOOK_TITLES from "./book_titles.json" assert { type: "json" };
 import PERICOPES from "./pericopes.json" assert { type: "json" };
@@ -34,7 +34,7 @@ export function getPericope(id: number): Pericope | undefined {
 export function getPericopesForBook(book: number): Pericope[] {
   return PERICOPES.filter(({ r }) => {
     const [start] = r;
-    const rBook = refFromId(start)[0];
+    const rBook = getRefFromId(start as VerseId)[0];
     return book === rBook;
   });
 }

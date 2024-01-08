@@ -1,6 +1,6 @@
 import { getPericope } from "@data";
-import type { BookInfo, Verse } from "@lib/types.ts";
-import { refFromId } from "@lib/utils.ts";
+import type { BookInfo, Verse, VerseId } from "@lib/types.ts";
+import { getRefFromId } from "@lib/utils.ts";
 
 type ArticleProps = {
   translation: string;
@@ -17,7 +17,7 @@ export default function Article(props: ArticleProps) {
   const { idx, key, translation, verse, posinset, setsize, bookInfo, crossRefs } = props;
   const [id, text] = verse;
 
-  const [b, c, v] = refFromId(id);
+  const [b, c, v] = getRefFromId(id as VerseId);
   const pericope = getPericope(id);
 
   if (!bookInfo) {

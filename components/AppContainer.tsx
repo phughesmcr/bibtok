@@ -5,8 +5,7 @@ type AppContainerProps = {
   children: ComponentChildren;
 };
 
-export default function AppContainer(props: AppContainerProps) {
-  const { children } = props;
+export default function AppContainer({ children }: AppContainerProps) {
   return (
     <div
       id="app-container"

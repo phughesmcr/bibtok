@@ -43,12 +43,12 @@ export default function Onboarding() {
     >
       <button
         type="button"
-        aria-label="close dialog"
+        aria-label="Close this dialog"
         className="absolute top-10 right-0 text-3xl m-4"
         tabIndex={0}
         onClick={toggleIsOnboard}
       >
-        &times;
+        &times;<span className="sr-only">Close</span>
       </button>
       <IconArrowBigUpLinesFilled className="w-28 h-28 animate-bounce" />
       <p className="font-bold text-5xl">Scroll Up</p>

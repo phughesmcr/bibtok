@@ -3,8 +3,8 @@ import { ROUTES_WHITELIST } from "@lib/constants.ts";
 
 export const handler: Handlers = {
   GET(req, ctx) {
-    const id = ctx.params.id;
-    if (!id || ROUTES_WHITELIST.includes(id.toLowerCase().trim())) {
+    const id = ctx.params.id.toLowerCase().trim();
+    if (!id || ROUTES_WHITELIST.includes(id)) {
       return ctx.next();
     }
     const url = new URL(req.url);

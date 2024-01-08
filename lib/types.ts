@@ -1,6 +1,8 @@
 export type Opaque<T, K> = T & { __TYPE__: K };
 
-export type VerseRef = Opaque<number, "VerseRef">;
+export type VerseId = Opaque<number, "VerseRef">;
+
+export type BibleRef = [b: number, c: number, v: number];
 
 export type Translation = "asv" | "bbe" | "cut" | "kjv" | "web";
 
@@ -29,7 +31,7 @@ export type Verse = [id: number, text: string];
 export type BibleKvData = {
   books: BookInfo[];
   crossrefs: CrossRef[];
-  translations: Record<Translation, Record<VerseRef, string>>;
+  translations: Record<Translation, Record<VerseId, string>>;
 };
 
 export type ApiParams = {

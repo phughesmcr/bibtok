@@ -38,16 +38,14 @@ export const handler: Handlers<ApiResponse> = {
 
 export default function Bible(props: PageProps<ApiResponse>) {
   return (
-    <>
-      <AppContainer>
-        <main role="main" className="min-w-0 min-h-0 w-full h-full">
-          <Toolbar />
-          <Partial name="carousel">
-            <Carousel res={props.data} />
-          </Partial>
-        </main>
-        <NavBar />
-      </AppContainer>
-    </>
+    <AppContainer>
+      <main role="main" className="min-w-0 min-h-0 w-full h-full">
+        <Toolbar />
+        <Partial name="carousel">
+          <Carousel res={props.data} />
+        </Partial>
+      </main>
+      <NavBar />
+    </AppContainer>
   );
 }

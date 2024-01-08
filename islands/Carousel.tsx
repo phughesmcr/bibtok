@@ -1,6 +1,7 @@
+import { API_DEFAULT_PAGE_SIZE, API_DEFAULT_TRANSLATION } from "@lib/constants.ts";
 import { $currentUrl, $currentVerse, $isLoading } from "@lib/state.ts";
 import type { ApiResponse } from "@lib/types.ts";
-import { debounce, refFromId } from "@lib/utils.ts";
+import { debounce, getRefFromId, isValidId } from "@lib/utils.ts";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import Article from "../components/Article.tsx";
 
@@ -8,27 +9,30 @@ type CarouselProps = {
   res: ApiResponse;
 };
 
-export default function Carousel(props: CarouselProps) {
-  const { res } = props;
-  const { verses, pageSize, translation, origin, extras, next } = res;
+export default function Carousel({ res }: CarouselProps) {
+  const { verses = [], pageSize = API_DEFAULT_PAGE_SIZE, translation = API_DEFAULT_TRANSLATION, next, extras } = res;
 
-  useEffect(() => {
-    $currentVerse.value = verses[0][0];
-  }, []);
-
+  const observerRef = useRef<IntersectionObserver | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [idxInView, setIdxInView] = useState<number>(0);
 
+  useEffect(() => {
+    $currentVerse.value = verses[0][0] || $currentVerse.value;
+  }, []);
+
   const scrollToTop = useCallback(() => {
-    containerRef.current?.scrollTo({ top: 0 });
-    containerRef.current?.focus();
-  }, [containerRef.current]);
+    const { current } = containerRef;
+    if (!current) return;
+    current.scrollTo({ top: 0 });
+    current.focus();
+  }, [containerRef]);
 
   const setParams = useCallback(
     debounce((idx: number) => {
-      if (idx && $currentUrl.value) {
-        const newUrl = new URL($currentUrl.value);
-        newUrl.searchParams.set("idx", `${idx}`);
+      const value = $currentUrl.peek();
+      if (idx && value) {
+        const newUrl = new URL(value);
+        newUrl.searchParams.set("idx", `${idx}`); // TODO: also set ?current=
         $currentUrl.value = newUrl;
       }
     }, 100),
@@ -38,18 +42,18 @@ export default function Carousel(props: CarouselProps) {
   useEffect(() => {
     if (idxInView) setParams(idxInView);
     $isLoading.value = false;
-  }, [idxInView, setParams]);
+  }, [idxInView, setParams]); // TODO: does setParams need to be in the deps?
 
   // START: SCROLLING OBSERVER
-
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const handleScrollIntoView = useCallback((entry: IntersectionObserverEntry) => {
     const debounced = debounce(() => {
       if (entry.isIntersecting) {
-        const pos = entry.target?.getAttribute("aria-posinset");
-        const id = entry.target?.getAttribute("data-verse");
-        if (pos) setIdxInView(parseInt(pos));
+        const { target } = entry;
+        if (!target) return;
+        const pos = target.getAttribute("aria-posinset");
+        const id = target.getAttribute("data-verse");
+        if (pos) setIdxInView(parseInt(pos, 10));
         if (id) $currentVerse.value = parseInt(id, 10);
       }
     }, 400);
@@ -81,22 +85,29 @@ export default function Carousel(props: CarouselProps) {
       aria-busy="false"
       className="w-full h-full overflow-x-hidden overflow-y-auto hide-scrollbars touch-pan-y snap-y snap-mandatory p-2"
     >
-      {verses?.map((verse, index) => (
-        <Article
-          idx={index}
-          translation={translation || "???"}
-          key={verse[0]}
-          verse={verse}
-          posinset={index + 1}
-          setsize={((pageSize ?? -1) + 1) || -1} // (pageSize + 1) or -1
-          bookInfo={extras?.books[refFromId(verse[0])[0]]}
-          /* crossRefs={extras?.crossRefs[verse[0]]} */
-        />
-      ))}
+      {verses?.map((verse, index) => {
+        const id = verse[0];
+        if (!isValidId(id)) {
+          return <></>;
+        }
+        const book = getRefFromId(id)[0];
+        return (
+          <Article
+            idx={index}
+            translation={translation}
+            key={id}
+            verse={verse}
+            posinset={index + 1}
+            setsize={((pageSize || -1) + 1) || -1} // (pageSize + 1) or -1
+            bookInfo={extras?.books[book]}
+            /* crossRefs={extras?.crossRefs[verse[0]]} */
+          />
+        );
+      })}
       {next && (
         <article
-          aria-posinset={(pageSize ?? verses.length) + 1}
-          aria-setsize={((pageSize ?? -1) + 1) || -1} // pageSize or -1
+          aria-posinset={(pageSize || verses.length) + 1}
+          aria-setsize={((pageSize || -1) + 1) || -1} // pageSize or -1
           key={crypto.randomUUID()}
           className="w-full h-full snap-start snap-always mb-4"
         >
